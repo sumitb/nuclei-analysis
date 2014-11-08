@@ -5,8 +5,6 @@ import itertools
 
 from skimage.feature import greycomatrix, greycoprops
 from skimage.color import rgb2gray
-from sklearn import datasets, cluster
-from sklearn.feature_extraction.image import grid_to_graph
 
 def pairwise(iterable):
     "s -> (s0,s1), (s2,s3), (s4, s5), ..."
@@ -21,6 +19,10 @@ img = cv2.imread(imgPath)
 # Load polygons co-ordinates from .txt
 txtPath = 'path-image-100.seg.000000.000000.txt'
 txt = open(txtPath, 'r')
+
+# Write features in csv
+ftPath = 'features.csv'
+ft = open(ftPath, 'w')
 
 # Convert polygons to numpy array
 numPoly = []
@@ -53,8 +55,9 @@ for poly in txt:
     a = x[:-1] * y[1:]
     b = y[:-1] * x[1:]
     A = np.sum(a - b) / 2.
+    #A = int(A)
 
-    print A
+    ft.write(str(A) + ' ' + str(A/2) + ' ' + str(2*A) + ' ' + str(3*A) +'\n')
     cv2.polylines(img, [pts], True, (0,255,255))
 
     # Show image
@@ -62,45 +65,6 @@ for poly in txt:
     #print image_gray
 
     #result = greycomatrix(image_gray, [1], [0, np.pi/4, np.pi/2, 3*np.pi/4], levels=4)
-
-digits = datasets.load_digits()
-images = digits.images
-X = np.reshape(images, (len(images), -1))
-connectivity = grid_to_graph(*images[0].shape)
-
-agglo = cluster.FeatureAgglomeration(connectivity=connectivity,
-                                     n_clusters=32)
-
-agglo.fit(X)
-X_reduced = agglo.transform(X)
-
-X_restored = agglo.inverse_transform(X_reduced)
-images_restored = np.reshape(X_restored, images.shape)
-plt.figure(1, figsize=(4, 3.5))
-plt.clf()
-plt.subplots_adjust(left=.01, right=.99, bottom=.01, top=.91)
-for i in range(4):
-    plt.subplot(3, 4, i + 1)
-    plt.imshow(images[i], cmap=plt.cm.gray, vmax=16, interpolation='nearest')
-    plt.xticks(())
-    plt.yticks(())
-    if i == 1:
-        plt.title('Original data')
-    plt.subplot(3, 4, 4 + i + 1)
-    plt.imshow(images_restored[i], cmap=plt.cm.gray, vmax=16,
-               interpolation='nearest')
-    if i == 1:
-        plt.title('Agglomerated data')
-    plt.xticks(())
-    plt.yticks(())
-
-plt.subplot(3, 4, 10)
-plt.imshow(np.reshape(agglo.labels_, images[0].shape),
-           interpolation='nearest', cmap=plt.cm.spectral)
-plt.xticks(())
-plt.yticks(())
-plt.title('Labels')
-plt.show()
 
 '''
 # create the figure
