@@ -1,10 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import cv2
 import itertools
 
+from skimage.io import *
+from skimage.draw import polygon
 from skimage.feature import greycomatrix, greycoprops
 from skimage.color import rgb2gray
+from skimage.measure import label, regionprops
 
 def pairwise(iterable):
     "s -> (s0,s1), (s2,s3), (s4, s5), ..."
@@ -14,7 +16,12 @@ def pairwise(iterable):
 # Load path-image from .jpg
 imgPath = 'path-image-100.000000.000000.jpg'
 #NamedWindow("opencv")
-img = cv2.imread(imgPath)
+#img = cv2.imread(imgPath)
+img = imread(imgPath) #set as_grey=True for grayscale
+
+# Crop to remove black
+img = img[:1870, :2340]
+lx, ly, rgbval = img.shape
 
 # Load polygons co-ordinates from .txt
 txtPath = 'path-image-100.seg.000000.000000.txt'
@@ -25,10 +32,16 @@ ftPath = 'features.csv'
 ft = open(ftPath, 'w')
 
 # Convert polygons to numpy array
+count = 0
 numPoly = []
+
 for poly in txt:
-    polygon = []
+    polyX = []
+    polyY = []
+    polygn = []
+
     polyList = poly.split(',')
+    polyImg = np.zeros((lx, ly), dtype=np.uint8)
     while '' in polyList:
         polyList.remove('')
     if '\n' in polyList:
@@ -36,46 +49,51 @@ for poly in txt:
     for i, num in enumerate(polyList):
         polyList[i] = int(polyList[i])
 
-    #x1, y1 = polyList[0], polyList[1]
-
-    # Draw a line from every co-ordinate with thickness of 1 px
     for x, y in pairwise(polyList):
-        polygon.append([x, y])
-    pts = np.array(polygon, np.int32)
+        polyX.append(x)
+        polyY.append(y)
+        polygn.append([x, y])
+
+    #print type(polygn), polygn
+    # Extract x and y coordinates
+    x = np.array(polyX)
+    y = np.array(polyY)
+    rr, cc = polygon(y, x)
+    polyImg[rr, cc] = False
+    mask = np.array(polyImg)
+    img[mask] = 0
+    print mask
+    plt.imshow(img, interpolation='nearest', vmin=0, vmax=255)
+
+    '''
+    pts = np.array(polygn, np.int32)
     pts = pts.reshape((-1,1,2))
     numPoly.append(pts)
+    '''
 
-    # feature 1: Area
-    P = np.array(polygon)
-    # Extract x and y coordinates
-    x = P[:, 0]
-    y = P[:, 1]
-
-    # Area calculation
+    # feature 1: Area calculation
     a = x[:-1] * y[1:]
     b = y[:-1] * x[1:]
     A = np.sum(a - b) / 2.
-    #A = int(A)
 
     ft.write(str(A) + ' ' + str(A/2) + ' ' + str(2*A) + ' ' + str(3*A) +'\n')
-    cv2.polylines(img, [pts], True, (0,255,255))
+    # Draw a line from every co-ordinate with thickness of 1 px
+    #cv2.polylines(img, [pts], True, (0,255,255))
 
-    # Show image
-    image_gray = rgb2gray(P)
-    #print image_gray
+    # feature 2: Bounding Index
+    #label_img = label(P)
+    #regions = regionprops(label_img)
+
+    # feature 3: Compute luminance of an RGB image.
+    #img_gray = rgb2gray(img)
 
     #result = greycomatrix(image_gray, [1], [0, np.pi/4, np.pi/2, 3*np.pi/4], levels=4)
+    count = count + 1
+    if count > 3:
+        break
 
-'''
+
 # create the figure
-fig = plt.figure(figsize=(8, 8))
-
-# display original image with locations of patches
-ax = fig.add_subplot(1, 1, 1)
-ax.imshow(image_gray, interpolation='nearest',
-          vmin=0, vmax=255)
-
-# display the patches and plot
-fig.suptitle('Grey level co-occurrence matrix features', fontsize=14)
-plt.show(fig)
-'''
+plt.figure(figsize=(8, 8))
+plt.imshow(img, interpolation='nearest', vmin=0, vmax=255)
+plt.show()

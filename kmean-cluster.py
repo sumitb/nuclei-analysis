@@ -49,7 +49,7 @@ plt.show(fig)
 km = KMeans(2, init='k-means++') # initialize
 km.fit(X)
 c = km.predict(X) # classify into three clusters
-
+print c, type(c)
 # see the code in helper library kmeans.py
 # it wraps a number of variables and maps integers to categoriy labels
 # this wrapper makes it easy to interact with this code and try other variables
