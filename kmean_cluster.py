@@ -7,7 +7,7 @@ from scipy.spatial.distance import cdist
 
 fileNum = '00'
 dataDir = 'data/path-image-1' + str(fileNum) + '.tif/'
-ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
+#ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
 
 def load_data(fi):
   fName = dataDir + fi
