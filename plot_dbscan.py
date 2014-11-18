@@ -84,6 +84,6 @@ def start_dbscan(fi,fo):
                     markeredgecolor='k', markersize=markersize)
 
     pl.title('Estimated number of clusters: %d' % n_clusters_)
-    pl.savefig(dataDir + fo +"dbscan/")
+    pl.savefig(dataDir + "dbscan/"+fo )
     #pl.savefig('dbscan_clusters.png')
-    pl.show()
+    pl.ion()

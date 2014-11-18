@@ -59,7 +59,7 @@ def plot_clusters(orig, pred, nx, ny, fo, legend=True):
   if legend:
     ll=plt.legend()
   plt.savefig(dataDir + fo)
-  plt.show()
+  plt.ion()
   return (p0, p1, p2)
 
 def main(fi,fo):
