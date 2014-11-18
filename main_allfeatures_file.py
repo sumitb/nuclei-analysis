@@ -247,7 +247,7 @@ for poly in txt:
 
     #/////////////////////////////////////////////////////////////////////////////////////
     ft.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+
-        str(glcm) + str(contrast) + str(homogeneity) + str(correlation)+str(dissimilarity)+str(ASM)+"\n")
+        str(contrast) + str(homogeneity) + str(correlation)+str(dissimilarity)+str(ASM)+"\n")
     
     #cv2.polylines(img, [pts], True, (0,255,255))
 	
