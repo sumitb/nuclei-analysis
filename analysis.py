@@ -132,12 +132,21 @@ im = Image.open(imgPath).convert("L")
 # convert to numpy (for convenience)
 imArray = np.asarray(im)
 
+with open(txtPath, 'r') as fin:
+    data = fin.read().splitlines(True)
+with open(txtPath, 'w') as fout:
+    fout.writelines(data[1:])
 
 numPoly = []
 polyId = 1
 
 # Convert polygons to numpy array
-for poly in txt:
+for line in txt:
+    poly = line.split('\t')
+    poly = poly[51:]
+    poly = poly[0]
+    poly = poly.replace(';', ',')
+
     mypoly = []
     polyList = poly.split(',')
     while '' in polyList:
@@ -145,7 +154,8 @@ for poly in txt:
     if '\n' in polyList:
         polyList.remove('\n')
     for i, num in enumerate(polyList):
-        polyList[i] = int(polyList[i])
+        polyList[i] = int(float(polyList[i]))
+
 
     #x1, y1 = polyList[0], polyList[1]
 
@@ -177,11 +187,11 @@ for poly in txt:
     # print x1,y1
 
     #BoundingBox
-    im = Image.open(imgPath) #the size is 500x350 
+    #im = Image.open(imgPath) #the size is 500x350
     box = bounding_box(mypoly)
     #print "box", box
-    key = im.crop(box)
-    key.save("poly_images/polygon" + str(polyId) + ".jpg")
+    #key = im.crop(box)
+    #key.save("poly_images/polygon" + str(polyId) + ".jpg")
     polyId += 1
  
     #2.Perimeter
@@ -223,16 +233,16 @@ for poly in txt:
     #image_file = image_file.convert('1') # convert image to black and white
     #glcm = greycomatrix(np.asarray(newIm), [1], [0], 256, symmetric=True, normed=True)
     glcm = greycomatrix(np.asarray(newIm), [1], [0], 256, symmetric=True, normed=True)
-    contrast = greycoprops(glcm, 'contrast')
-    energy = greycoprops(glcm, 'energy')
-    #print('energy is: ',  energy)
-    homogeneity = greycoprops(glcm, 'homogeneity')
+
+    contrast = greycoprops(glcm, 'contrast').item()
+    energy = greycoprops(glcm, 'energy').item()
+    homogeneity = greycoprops(glcm, 'homogeneity').item()
     #print('homogeneity is: ',  homogeneity)
-    correlation = greycoprops(glcm, 'correlation')
+    correlation = greycoprops(glcm, 'correlation').item()
     #print('correlation is: ',  correlation)
-    dissimilarity = greycoprops(glcm, 'dissimilarity')
+    dissimilarity = greycoprops(glcm, 'dissimilarity').item()
     #print('dissimilarity is: ',  dissimilarity)
-    ASM = greycoprops(glcm, 'ASM')
+    ASM = greycoprops(glcm, 'ASM').item()
     #print('ASM is: ',  ASM)
 
 
