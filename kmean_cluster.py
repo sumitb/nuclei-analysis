@@ -5,11 +5,12 @@ from sklearn.cluster import KMeans
 from scipy.cluster.vq import kmeans,vq
 from scipy.spatial.distance import cdist
 
-fileNum = '05'
+fileNum = '00'
 dataDir = 'data/path-image-1' + str(fileNum) + '.tif/'
 ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
 
-def load_data(fName = ftPath):
+def load_data(fi):
+  fName = dataDir + fi
   fp = open(fName)
   XX = np.loadtxt(fp)
   fp.close()
@@ -44,7 +45,7 @@ def plot_elbow_curve(kIdx, K, avgWithinSS):
   tt = plt.title('Elbow for KMeans clustering')
   return(fig,ax)
 
-def plot_clusters(orig, pred, nx, ny, legend=True):
+def plot_clusters(orig, pred, nx, ny, fo, legend=True):
   data = orig
   ylabels = { 0:'',1:'',2:''}
   # plot data into three clusters based on value of c
@@ -57,14 +58,15 @@ def plot_clusters(orig, pred, nx, ny, legend=True):
   tt= plt.title('Polygon Dataset, KMeans clustering with K=2')
   if legend:
     ll=plt.legend()
+  plt.savefig(dataDir + fo)
   plt.show()
   return (p0, p1, p2)
 
-
-X = load_data(ftPath)
-kIdx = 2
-km = KMeans(kIdx, init='k-means++') # initialize
-km.fit(X)
-c = km.predict(X) # classify into three clusters
-
-(pl0,pl1,pl2) = plot_clusters(X,c,3,2) # column 3 , vs column 2. Note indexing is 0 based
+def main(fi,fo):
+	X = load_data(fi)
+	kIdx = 2
+	km = KMeans(kIdx, init='k-means++') # initialize
+	km.fit(X)
+	c = km.predict(X) # classify into three clusters
+	
+	(pl0,pl1,pl2) = plot_clusters(X,c,3,2,fo) # column 3 GDP, vs column 2 infant mortality. Note indexing is 0 based

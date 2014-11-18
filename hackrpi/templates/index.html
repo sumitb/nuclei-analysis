@@ -28,6 +28,26 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script type="text/javascript">
+    function changeImage(value){
+
+    	var img = document.getElementById("imagebox");
+    	console.log(value)
+    	if (value=="area100")
+    	img.src="/static/img/path100/area100.png"; 
+    	if (value=="allFeatures") 
+    	img.src="/static/img/path100/allFeatures.png";
+    	if (value=="compactness_correlation")
+    		img.src="/static/img/path100/compactness_correlation.png";
+    	if (value=="area_homo")
+    		img.src="/static/img/path100/area_homogenity.png";
+    	if (value=="boundedIndex")
+    		img.src="/static/img/path100/boundaryIndex.png";
+    	if (value=="perimeter_dissimilarity")
+    		img.src="/static/img/path100/perimeter_dissimilarity.png";
+    }
+    </script>>
+
 </head>
 
 <body>
@@ -145,15 +165,22 @@
     
     <section id="table" class="table">
         <div class="col-lg-6">
-            <h2>Contextual Classes</h2>
+            <h2>Polygon datasets</h2>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
-                        <tr>
-                            <th>Page</th>
-                            <th>Visits</th>
-                            <th>% New Visits</th>
-                            <th>Revenue</th>
+                        <tr class="danger">
+                            <th>Polygon</th>
+                            <th>Area</th>
+                            <th>Perimeter</th>
+                            <th>Compactness</th>
+                            <th>Assymetry</th>
+                            <th>Bounded Index</th>
+                            <th>Contrast</th>
+                            <th>Energy</th>
+                            <th>Homogenity</th>
+                            <th>Correlation</th>
+                            <th>Dissimilarity</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -205,10 +232,23 @@
         </div>
     </section>
     
+
+    <section id="query" class="about">
+    	
+			<select id="queries">
+			<option value="allFeatures" onclick="changeImage(this.value)" >Cluster with all features</option>
+			<option value="area100" onclick="changeImage(this.value)">Cluster with area > 100</option>
+			<option value="area_homo" onclick="changeImage(this.value)">Cluster with area>150 and homogenity > 0.99998</option>
+			<option value="perimeter_dissimilarity" onclick="changeImage(this.value)">Cluster with perimeter less than 45 and dissimilarity > 0.004 </option>
+			<option value="boundedIndex" onclick="changeImage(this.value)">Cluster with  bounded Index=1</option>
+			<option value="compactness_correlation" onclick="changeImage(this.value)">Cluster with compactness 0.02 to 0.05 and coorelation > 0.8</option>
+		</select>
+	
+    </section>
+
+
     <section id="graph" class="graph">
-        <a href="#">
-            <img class="img-cluster" src="static/img/kmeans_cluster.png">
-        </a>
+        <img id="imagebox" src="static/img/path100/allFeatures.png">
     </section>
     
     <!-- About -->

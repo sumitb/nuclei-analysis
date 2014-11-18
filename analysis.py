@@ -11,6 +11,12 @@ from skimage.color import rgb2gray
 from skimage.measure import label, regionprops
 from PIL import Image, ImageDraw
 
+
+fileNum = '00'
+dataDir = 'data/path-image-1' + str(fileNum) + '.tif/'
+
+
+
 def pairwise(iterable):
     "s -> (s0,s1), (s2,s3), (s4, s5), ..."
     a = iter(iterable)
@@ -108,9 +114,62 @@ def variance(list):
     #    print var
    return var/len(list)
 
+#Cluster based on filters
+def filteredCluster(f):
+	fp = open(f,'r')
+	fw1 = open(dataDir+'area100.csv','w')
+	fw2 = open(dataDir+'compactness_correlation.csv','w')
+	fw3 = open(dataDir+'area_homogenity.csv','w')
+	fw4 = open(dataDir+'permimeter_dissimilarity.csv','w')
+	fw5 = open(dataDir+'boundaryIndex.csv','w')
+	i=0
+	data = fp.readlines()
+    	for line in data:
+                i = i+1
+                print (i)
+                value = line.split()
+                Area = float(value[0])
+                perimeter = float(value[1])
+                compactness = float(value[2])
+                assym = float(value[3])
+                BoundaryIndex = float(value[4])
+		contrast = float(value[5])
+		energy = float(value[6])
+		homogeneity = float(value[7])
+		correlation = float(value[8])
+		dissimilarity = float(value[9])
+		ASM = float(value[10])
+                # filter 1: area > 100
+                if Area > 100:
+			fw1.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+ ' '+
+        str(contrast) + ' '+  str(energy)+ ' '  +  str(homogeneity)+ ' '  + str(correlation)+ ' '  + str(dissimilarity)+ ' '  + str(ASM)+"\n")
+	
+		# filter 2: compactness 0.02-0.05 and correlation > 0.8 
+		if compactness > 0.02 and compactness < 0.05 and correlation > 0.8: 
+			fw2.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+ ' '+
+        str(contrast) + ' '+  str(energy)+ ' '  +  str(homogeneity)+ ' '  + str(correlation)+ ' '  + str(dissimilarity)+ ' '  + str(ASM)+"\n")
+		
+		# filter 3: area > 150 and homogenityi > 0.999998
+		if Area > 150 and homogeneity > 0.999998:
+			fw3.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+ ' '+
+        str(contrast) + ' '+  str(energy)+ ' '  +  str(homogeneity)+ ' '  + str(correlation)+ ' '  + str(dissimilarity)+ ' '  + str(ASM)+"\n")
+
+		#filter 4: perimeter < 45 and dissimilarity > 0.0004
+		if perimeter < 45 and dissimilarity > 0.0004:
+			fw4.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+ ' '+
+        str(contrast) + ' '+  str(energy)+ ' '  +  str(homogeneity)+ ' '  + str(correlation)+ ' '  + str(dissimilarity)+ ' '  + str(ASM)+"\n") 
+		
+		#filter 5: boundaryIndex = 1
+		if BoundaryIndex == 1:
+			fw5.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+ ' '+
+        str(contrast) + ' '+  str(energy)+ ' '  +  str(homogeneity)+ ' '  + str(correlation)+ ' '  + str(dissimilarity)+ ' '  + str(ASM)+"\n")
+
+ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
+
 
 fileNum = '05'
 dataDir = 'data/path-image-1' + str(fileNum) + '.tif/'
+
 # Load path-image from .jpg
 imgPath = dataDir + 'path-image-1' + str(fileNum) + '.000000.000000.jpg'
 
@@ -247,8 +306,9 @@ for line in txt:
 
 
     #/////////////////////////////////////////////////////////////////////////////////////
-    ft.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+
-        str(contrast) + str(energy) +  str(homogeneity) + str(correlation) + str(dissimilarity) + str(ASM)+"\n")
+    ft.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+ ' '+
+        str(contrast) + ' '+  str(energy)+ ' '  +  str(homogeneity)+ ' '  + str(correlation)+ ' '  + str(dissimilarity)+ ' '  + str(ASM)+"\n")
 
     #/////////////////////////////////////////////////////////////////////////////////////
 
+filteredCluster(ftPath)
