@@ -1,16 +1,15 @@
-
 import numpy as np
+
 from scipy.spatial import distance
 from sklearn.cluster import DBSCAN
 from sklearn import metrics
-from sklearn.datasets.samples_generator import make_blobs
-from sklearn.preprocessing import StandardScaler
+
 
 ##############################################################################
 # Generate sample data
 #centers = [[1, 1], [-1, -1], [1, -1]]
 #X, labels_true = make_blobs(n_samples=750, centers=centers, cluster_std=0.4)
-fName = ('features.csv')
+fName = ('hackrpi/Allfeatures.csv')
 fp = open(fName)
 X = np.loadtxt(fp)
 fp.close()

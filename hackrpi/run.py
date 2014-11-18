@@ -6,6 +6,9 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route('/m')
+def indexm():
+    return render_template('indexm.html')
 @app.route('/ru')
 def ru():
     return render_template('index.backup.html')
