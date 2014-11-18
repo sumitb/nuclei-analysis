@@ -109,7 +109,7 @@ def variance(list):
    return var/len(list)
 
 
-fileNum = '00'
+fileNum = '05'
 dataDir = 'data/path-image-1' + str(fileNum) + '.tif/'
 # Load path-image from .jpg
 imgPath = dataDir + 'path-image-1' + str(fileNum) + '.000000.000000.jpg'

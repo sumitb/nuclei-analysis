@@ -5,7 +5,7 @@ from sklearn.cluster import KMeans
 from scipy.cluster.vq import kmeans,vq
 from scipy.spatial.distance import cdist
 
-fileNum = '00'
+fileNum = '05'
 dataDir = 'data/path-image-1' + str(fileNum) + '.tif/'
 ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
 
@@ -46,15 +46,15 @@ def plot_elbow_curve(kIdx, K, avgWithinSS):
 
 def plot_clusters(orig, pred, nx, ny, legend=True):
   data = orig
-  ylabels = { 0:'Male life expectancy in yrs',1:'Female life expectancy in yrs',2:'Infant mortality, per 1000'}
+  ylabels = { 0:'',1:'',2:''}
   # plot data into three clusters based on value of c
-  p0 = plt.plot(data[pred==0,nx],data[pred==0,ny],'ro',label='Underdeveloped')
-  p2 = plt.plot(data[pred==2,nx],data[pred==2,ny],'go',label='Developing')
-  p1 = plt.plot(data[pred==1,nx],data[pred==1,ny],'bo',label='Developed')
+  p0 = plt.plot(data[pred==0,nx],data[pred==0,ny],'ro',label='Cluster 1')
+  p2 = plt.plot(data[pred==2,nx],data[pred==2,ny],'go',label='Cluster 2')
+  p1 = plt.plot(data[pred==1,nx],data[pred==1,ny],'bo',label='Cluster 3')
 
-  lx = p1[0].axes.set_xlabel('Per Capita GDP in US$')
+  lx = p1[0].axes.set_xlabel('')
   ly = p1[0].axes.set_ylabel(ylabels[ny])
-  tt= plt.title('UN countries Dataset, KMeans clustering with K=3')
+  tt= plt.title('Polygon Dataset, KMeans clustering with K=2')
   if legend:
     ll=plt.legend()
   plt.show()
@@ -67,4 +67,4 @@ km = KMeans(kIdx, init='k-means++') # initialize
 km.fit(X)
 c = km.predict(X) # classify into three clusters
 
-(pl0,pl1,pl2) = plot_clusters(X,c,3,2) # column 3 GDP, vs column 2 infant mortality. Note indexing is 0 based
+(pl0,pl1,pl2) = plot_clusters(X,c,3,2) # column 3 , vs column 2. Note indexing is 0 based
