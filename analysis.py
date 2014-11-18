@@ -109,8 +109,18 @@ def variance(list):
    return var/len(list)
 
 
+fileNum = '00'
+dataDir = 'data/path-image-1' + str(fileNum) + '.tif/'
 # Load path-image from .jpg
-imgPath = 'path-image-100.000000.000000.jpg'
+imgPath = dataDir + 'path-image-1' + str(fileNum) + '.000000.000000.jpg'
+
+# Load polygons co-ordinates from .txt
+txtPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.txt'
+txt = open(txtPath, 'r')
+
+# Write features in csv
+ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
+ft = open(ftPath, 'w')
 
 img = imread(imgPath) #set as_grey=True for grayscale
 # Crop to remove black
@@ -122,17 +132,11 @@ im = Image.open(imgPath).convert("L")
 # convert to numpy (for convenience)
 imArray = np.asarray(im)
 
-# Load polygons co-ordinates from .txt
-txtPath = 'path-image-100.seg.000000.000000.txt'
-txt = open(txtPath, 'r')
 
-# Write features in csv
-ftPath = 'hackrpi/Allfeatures.csv'
-ft = open(ftPath, 'w')
+numPoly = []
+polyId = 1
 
 # Convert polygons to numpy array
-numPoly = []
-t=1
 for poly in txt:
     mypoly = []
     polyList = poly.split(',')
@@ -177,8 +181,8 @@ for poly in txt:
     box = bounding_box(mypoly)
     #print "box", box
     key = im.crop(box)
-    key.save("poly_images/polygon" + str(t) + ".jpeg")
-    t+=1
+    key.save("poly_images/polygon" + str(polyId) + ".jpg")
+    polyId += 1
  
     #2.Perimeter
     perimeter= calc_peri(mypoly)
@@ -188,7 +192,7 @@ for poly in txt:
     compactness= Area/(perimeter*perimeter)
     #print compactness
 
-    #4.Asymetry
+    #4.Assymetry
     xy = x * y
     #print "var(x)", variance(x)
     #print "var(y)", variance(y)
