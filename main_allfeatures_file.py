@@ -10,7 +10,7 @@ from skimage.feature import greycomatrix, greycoprops
 from skimage.color import rgb2gray
 from skimage.measure import label, regionprops
 from PIL import Image, ImageDraw
-#from skimage import data, util
+#from skimage impftort data, util
 #from skimage.morphology import label
 
 def pairwise(iterable):
@@ -133,7 +133,7 @@ txtPath = 'path-image-100.seg.000000.000000.txt'
 txt = open(txtPath, 'r')
 
 # Write features in csv
-ftPath = 'hackrpi/features.csv'
+ftPath = 'hackrpi/allfeatures.csv'
 ft = open(ftPath, 'w')
 
 # Convert polygons to numpy array
@@ -233,9 +233,21 @@ for poly in txt:
     #print glcm
     contrast = greycoprops(glcm, 'contrast')
     #print contrast
+    #energy = greycoprops(glcm, 'energy')
+    #print('energy is: ',  energy)
+    homogeneity = greycoprops(glcm, 'homogeneity')
+    #print('homogeneity is: ',  homogeneity)
+    correlation = greycoprops(glcm, 'correlation')
+    #print('correlation is: ',  correlation)
+    dissimilarity = greycoprops(glcm, 'dissimilarity')
+    #print('dissimilarity is: ',  dissimilarity)
+    ASM = greycoprops(glcm, 'ASM')
+    #print('ASM is: ',  ASM)
+
 
     #/////////////////////////////////////////////////////////////////////////////////////
-    ft.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+str(glcm) + str(contrast) +'\n')
+    ft.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+
+        str(glcm) + str(contrast) + str(homogeneity) + str(correlation)+str(dissimilarity)+str(ASM)+"\n")
     
     #cv2.polylines(img, [pts], True, (0,255,255))
 	
