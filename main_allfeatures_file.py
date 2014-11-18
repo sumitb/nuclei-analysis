@@ -1,13 +1,15 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import cv2
 import itertools
 import math
 import os
 
+from skimage.io import *
+from skimage.draw import polygon
 from skimage.feature import greycomatrix, greycoprops
 from skimage.color import rgb2gray
-from PIL import Image
+from skimage.measure import label, regionprops
+from PIL import Image, ImageDraw
 #from skimage import data, util
 #from skimage.morphology import label
 
@@ -15,7 +17,8 @@ def pairwise(iterable):
     "s -> (s0,s1), (s2,s3), (s4, s5), ..."
     a = iter(iterable)
     return itertools.izip(a, a)
-	
+
+
 #Calc_PeriFunction
 def calc_peri(coords):
     Nedges = len(coords)-1
@@ -108,11 +111,22 @@ def variance(list):
    return var/len(list)
 
 
-
 # Load path-image from .jpg
 imgPath = 'path-image-100.000000.000000.jpg'
+
+img = imread(imgPath) #set as_grey=True for grayscale
+# Crop to remove black
+img = img[:1870, :2340]
+lx, ly, rgbval = img.shape
+    
+# read image as RGB and add alpha (transparency)
+im = Image.open(imgPath).convert("L")
+# convert to numpy (for convenience)
+imArray = np.asarray(im)
+
+
 #NamedWindow("opencv")
-img = cv2.imread(imgPath)
+#img = cv2.imread(imgPath)
 
 # Load polygons co-ordinates from .txt
 txtPath = 'path-image-100.seg.000000.000000.txt'
@@ -126,7 +140,7 @@ ft = open(ftPath, 'w')
 numPoly = []
 t=1
 for poly in txt:
-    polygon = []
+    mypoly = []
     polyList = poly.split(',')
     while '' in polyList:
         polyList.remove('')
@@ -139,13 +153,17 @@ for poly in txt:
 
     # Draw a line from every co-ordinate with thickness of 1 px
     for x, y in pairwise(polyList):
-        polygon.append([x, y])
-    pts = np.array(polygon, np.int32)
-    pts = pts.reshape((-1,1,2))
-    numPoly.append(pts)
+        mypoly.append((x, y))
+        #polyX.append(x)
+        #polyY.append(y)
+        
+    #pts = np.array(mypoly, np.int32)
+    #pts = pts.reshape((-1,1,2))
+    
+    #numPoly.append(pts)
 
     # feature 1: Area
-    P = np.array(polygon)
+    P = np.array(mypoly)
     # Extract x and y coordinates
     x = P[:, 0]
     y = P[:, 1]
@@ -156,21 +174,21 @@ for poly in txt:
     Area = np.sum(a - b) / 2
     
     #5 BoundaryIndex
-    BoundaryIndex = bounding_index(polygon)
+    BoundaryIndex = bounding_index(mypoly)
     #print "Bounding Index: " + str(BoundaryIndex)
     #for x1,y1 in polygon:
     # print x1,y1
 
     #BoundingBox
     im = Image.open(imgPath) #the size is 500x350 
-    box = bounding_box(polygon)
+    box = bounding_box(mypoly)
     #print "box", box
-    kay = im.crop(box)
-    kay.save("poly_images/polygon" + str(t) + ".jpeg")
+    key = im.crop(box)
+    key.save("poly_images/polygon" + str(t) + ".jpeg")
     t+=1
  
     #2.Perimeter
-    perimeter= calc_peri(polygon)
+    perimeter= calc_peri(mypoly)
     #print "perimeter:",perimeter
     
     #3.Compactness
@@ -185,13 +203,44 @@ for poly in txt:
     assym = (2*math.sqrt((0.25*((variance(x)+variance(y))**2))+variance(xy)-(variance(x)*variance(y))))/(variance(x)+variance(y))
     #print assym 
     
+    #///////////////////////////////////////////////////////////////////////////////////////////////////
+    #GraylevelMatrix
+    # create mask
+    #print imArray.shape[1],imArray.shape[0]
+    maskIm = Image.new('L', (imArray.shape[1], imArray.shape[0]), 0)
+    ImageDraw.Draw(maskIm).polygon(mypoly, outline=1, fill=1)
+    mask = np.array(maskIm)
+    #print mask
+
+    # assemble new image (uint8: 0-255)
+    newImArray = np.empty(imArray.shape,dtype='uint8')
+    #print type(newImArray), newImArray[3:30,3:30,3:30]
+
+    # colors (three first columns, RGB)
+    newImArray[:,:] = imArray[:,:]
+
+    # transparency (4th column)
+    #print mask*255
+    newImArray[:,:] = mask*255
     
-    ft.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+ str(BoundaryIndex)+ '\n')
+    newIm = Image.fromarray(newImArray, "L")#.convert("L")
+    #newIm.save("out"+str(count)+".png")  
+
+    #image_file = Image.open("out"+str(count)+".png").convert("L") # open colour image  
+    #image_file = image_file.convert('1') # convert image to black and white
+    #glcm = greycomatrix(np.asarray(newIm), [1], [0], 256, symmetric=True, normed=True)
+    glcm = greycomatrix(np.asarray(newIm), [1], [0], 256, symmetric=True, normed=True)
+    #print glcm
+    contrast = greycoprops(glcm, 'contrast')
+    #print contrast
+
+    #/////////////////////////////////////////////////////////////////////////////////////
+    ft.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+str(glcm) + str(contrast) +'\n')
     
-    cv2.polylines(img, [pts], True, (0,255,255))
+    #cv2.polylines(img, [pts], True, (0,255,255))
 	
     # Show image
-    image_gray = rgb2gray(P)
+    #image_gray = rgb2gray(P)
     #print image_gray
 
     #result = greycomatrix(image_gray, [1], [0, np.pi/4, np.pi/2, 3*np.pi/4], levels=4)
