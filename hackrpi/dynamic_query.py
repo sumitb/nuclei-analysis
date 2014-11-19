@@ -89,7 +89,7 @@ def filteredCluster(paraList):
             print("not found")
 
     main("filterFeature.csv","myfeature.png")
-    start_dbscan("filterFeature.csv","myfeature_dbscan.png")
+    start_dbscan("filterFeature_dbscan.csv","myfeature_dbscan.png")
         #print paraList
     """for para in paraList:
             print para
