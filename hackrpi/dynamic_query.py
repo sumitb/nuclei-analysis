@@ -1,17 +1,43 @@
+from kmean_cluster import main
+from plot_dbscan import start_dbscan
+
 #Cluster based on filters
-def filteredCluster(filter_area,filter_perimeter,filter_compactness,filter_assym,filter_BoundaryIndex,
-    filter_contrast,filter_energy,filter_homogeneity,filter_correlation,filter_dissimilarity,
-    filter_asm):
-	
+def filteredCluster(paraList):
+
     fileNum = '00'
     dataDir = '../data/path-image-1' + str(fileNum) + '.tif/'
     ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
     fp = open(ftPath,'r')
-    fw = open(dataDir+'myquery.csv','w')
+    filterFeature = dataDir+'filterFeature.csv' 
+    fw = open(filterFeature,'w')
     
     data = fp.readlines()
+    for i,para in enumerate(paraList):
+        #print f
+        if i == 0:
+            filter_area = para
+        if i == 1:
+            filter_perimeter = para
+        if i == 2:
+            filter_compactness = para
+        if i == 3:
+            filter_assym = para
+        if i == 4:
+            filter_BoundaryIndex = para
+        if i == 5:
+            filter_contrat = para
+        if i == 6:
+            filter_energy = para
+        if i == 7:
+            filter_homogeneity= para
+        if i == 8:
+            filter_correlation = para
+        if i == 9:
+            filter_dissimilarity = para
+        if i == 10:
+            filter_asm = para
     #myquery = ""
-    #print "read start"
+    print "read start"
     i = 0
     for line in data:
         value = line.split()
@@ -26,19 +52,33 @@ def filteredCluster(filter_area,filter_perimeter,filter_compactness,filter_assym
         correlation = float(value[8])
         dissimilarity = float(value[9])
         asm = float(value[10])
-        #i +=1
-        #print i
-        #print BoundaryIndex
-        if ((area >filter_area[0] and area <filter_area[1]) and
-            (perimeter >filter_perimeter[0] and perimeter <filter_perimeter[1]) and
-            (compactness >filter_compactness[0] and compactness <filter_compactness[1]) and
-            (assym >filter_assym[0] and assym <filter_assym[1]) and
-            (BoundaryIndex >filter_BoundaryIndex[0] and BoundaryIndex >filter_BoundaryIndex[1]) and
-            (contrast >filter_contrast[0] and contrast <filter_contrast[1]) and
-            (energy >filter_energy[0] and energy <filter_energy[1]) and
-            (homogeneity >filter_homogeneity[0] and homogeneity <filter_homogeneity[1]) and
-            (correlation >filter_correlation[0] and correlation <filter_correlation[1]) and
-            (dissimilarity >filter_dissimilarity[0] and dissimilarity <filter_dissimilarity[1])and
+        i +=1
+        if i >1000:
+            break
+        """print area
+        print perimeter
+        print compactness
+        print assym
+        print BoundaryIndex
+        print contrast
+        print energy
+        print homogeneity
+        print correlation
+        print dissimilarity
+        print correlation
+        print dissimilarity
+        print asm"""
+        
+        if ((area >filter_area[0] and area <filter_area[1]) or
+            (perimeter >filter_perimeter[0] and perimeter <filter_perimeter[1]) or
+            (compactness >filter_compactness[0] and compactness <filter_compactness[1]) or
+            (assym >filter_assym[0] and assym <filter_assym[1]) or
+            (BoundaryIndex >filter_BoundaryIndex[0] and BoundaryIndex >filter_BoundaryIndex[1]) or
+            (contrast >filter_contrast[0] and contrast <filter_contrast[1]) or
+            (energy >filter_energy[0] and energy <filter_energy[1]) or
+            (homogeneity >filter_homogeneity[0] and homogeneity <filter_homogeneity[1]) or
+            (correlation >filter_correlation[0] and correlation <filter_correlation[1]) or
+            (dissimilarity >filter_dissimilarity[0] and dissimilarity <filter_dissimilarity[1])or
             (asm >filter_asm[0] and asm <filter_asm[1]) ):
           
           print "found"
@@ -48,8 +88,10 @@ def filteredCluster(filter_area,filter_perimeter,filter_compactness,filter_assym
         else:
             print("not found")
 
+    main("filterFeature.csv","myfeature.png")
+    start_dbscan("filterFeature.csv","myfeature_dbscan.png")
         #print paraList
-        """for para in paraList:
+    """for para in paraList:
             print para
             if para[0]=='area':
                 min = para[1]
