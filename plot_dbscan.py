@@ -52,8 +52,8 @@ def start_dbscan(fi,fo):
     #    metrics.adjusted_rand_score(labels_true, labels)
     #print "Adjusted Mutual Information: %0.3f" % \
     #    metrics.adjusted_mutual_info_score(labels_true, labels)
-    print ("Silhouette Coefficient: %0.3f" %
-           metrics.silhouette_score(D, labels, metric='precomputed'))
+#    print ("Silhouette Coefficient: %0.3f" %
+#           metrics.silhouette_score(D, labels, metric='precomputed'))
 
     ##############################################################################
     # Plot result
@@ -86,4 +86,4 @@ def start_dbscan(fi,fo):
     pl.title('Estimated number of clusters: %d' % n_clusters_)
     pl.savefig(dataDir + "dbscan/"+fo )
     #pl.savefig('dbscan_clusters.png')
-    pl.ion()
+    #pl.ion()
