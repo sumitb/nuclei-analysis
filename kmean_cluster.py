@@ -55,7 +55,7 @@ def plot_clusters(orig, pred, nx, ny, fo, legend=True):
 
   lx = p1[0].axes.set_xlabel('')
   ly = p1[0].axes.set_ylabel(ylabels[ny])
-  tt= plt.title('Polygon Dataset, KMeans clustering with K=2')
+  tt= plt.title('Polygon Dataset, KMeans clustering with K=3')
   if legend:
     ll=plt.legend()
   plt.savefig(dataDir + fo)
@@ -64,7 +64,7 @@ def plot_clusters(orig, pred, nx, ny, fo, legend=True):
 
 def main(fi,fo):
 	X = load_data(fi)
-	kIdx = 2
+	kIdx = 3
 	km = KMeans(kIdx, init='k-means++') # initialize
 	km.fit(X)
 	c = km.predict(X) # classify into three clusters
