@@ -356,7 +356,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <h2>Clusters</h2>
+                    <h2>KMeans vs DBScan clusters</h2>
                     <hr class="small">
                     <div class="row">
                         <div class="col-md-6">
@@ -512,9 +512,9 @@
             url = $form.attr('action');*/
 
         /* Send the data using post */
-        /*var posting = $.post(url, {
-            s: term
-        });*/
+        var posting = $.post('/feature_select', {
+            featureList: arrFeature
+        });
 
         /* Put the results in a div */
         /*posting.done(function(data) {
