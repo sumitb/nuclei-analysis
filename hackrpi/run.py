@@ -31,23 +31,22 @@ def landing():
 if __name__ == '__main__':
     app.run(debug=True)
 
-"""def get_paraList():
-    paraList = []
-    paraList0 = ['Area','50','100'] #request.args.get('area','min','max', type=int)
-    paraList1 = ['perimeter','20', '50'] #.args.get('para','min','max', type=int)
-    for i in range(1):  #range(10)
-    	paraList.append(paraList+str(i))
-    filteredCluster(paraList)
-    
-   a = request.args.get('a', 0, type=int)
-   b = request.args.get('b', 0, type=int)
-   a = request.args.get('a', 0, type=int)
-   b = request.args.get('b', 0, type=int)
-   a = request.args.get('a', 0, type=int)
-   b = request.args.get('b', 0, type=int)
-   a = request.args.get('a', 0, type=int)
-   b = request.args.get('b', 0, type=int)
-   a = request.args.get('a', 0, type=int)"""
-   #f is path of allfeaturefile.csv
+def get_paraList():
+ 
+    area = request.args.getlist('tx1')
+    peri = request.args.getlist('tx2')
+    compactness = request.args.getlist('tx3')
+    assym = request.args.getlist('tx4')
+    BoundaryIndex = request.args.getlist('tx5')
+    contrast = request.args.getlist('tx6')
+    energy = request.args.getlist('tx7')
+    homogeneity = request.args.getlist('tx8')
+    correlation = request.args.getlist('tx9')
+    dissimilarity = request.args.getlist('tx10')
+    asm = request.args.getlist('tx11')
+
+    #print area
+    filteredCluster(area,peri,compactness,assym,BoundaryIndex,contrast,energy,
+        homogeneity,correlation,dissimilarity,assym)
      
-   #return jsonify(result=a + b)
+    #return jsonify(result=a + b)
