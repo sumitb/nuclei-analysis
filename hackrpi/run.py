@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from analysis import filteredCluster 
+from dynamic_query import filteredCluster  
 app = Flask(__name__)
 
 
@@ -20,7 +20,7 @@ def style():
 def admin():
     return render_template('admin.html')
 @app.route('/tables.html')
-def tables():
+def tables():pass
 @app.route('/charts.html')
 def charts():
     return render_template('charts.html')
@@ -31,13 +31,15 @@ def landing():
 if __name__ == '__main__':
     app.run(debug=True)
 
-def get_paraList():
+"""def get_paraList():
     paraList = []
     paraList0 = ['Area','50','100'] #request.args.get('area','min','max', type=int)
     paraList1 = ['perimeter','20', '50'] #.args.get('para','min','max', type=int)
     for i in range(1):  #range(10)
     	paraList.append(paraList+str(i))
-   """a = request.args.get('a', 0, type=int)
+    filteredCluster(paraList)
+    
+   a = request.args.get('a', 0, type=int)
    b = request.args.get('b', 0, type=int)
    a = request.args.get('a', 0, type=int)
    b = request.args.get('b', 0, type=int)
@@ -47,5 +49,5 @@ def get_paraList():
    b = request.args.get('b', 0, type=int)
    a = request.args.get('a', 0, type=int)"""
    #f is path of allfeaturefile.csv
-    filteredCluster(paraList) 
+     
    #return jsonify(result=a + b)
