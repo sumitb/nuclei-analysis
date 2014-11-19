@@ -14,6 +14,9 @@
     <!-- Bootstrap Core CSS -->
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Bootstrap Slider CSS -->
+    <link href="static/css/bootstrap-slider.css" rel="stylesheet">
+    
     <!-- Custom CSS -->
     <link href="static/css/stylish-portfolio.css" rel="stylesheet">
 
@@ -34,9 +37,9 @@
     	var img = document.getElementById("imagebox");
     	console.log(value)
     	if (value=="area100")
-    	img.src="/static/img/path100/area100.png"; 
+    	   img.src="/static/img/path100/area100.png"; 
     	if (value=="allFeatures") 
-    	img.src="/static/img/path100/allFeatures.png";
+    	   img.src="/static/img/path100/allFeatures.png";
     	if (value=="compactness_correlation")
     		img.src="/static/img/path100/compactness_correlation.png";
     	if (value=="area_homo")
@@ -46,7 +49,7 @@
     	if (value=="perimeter_dissimilarity")
     		img.src="/static/img/path100/perimeter_dissimilarity.png";
     }
-    </script>>
+    </script>
 
 </head>
 
@@ -70,7 +73,7 @@
                 <a href="#table">Features</a>
             </li>
             <li>
-                <a href="#graph">Clusters</a>
+                <a href="#cluster">Clusters</a>
             </li>
             <li>
                 <a href="#about">About Us</a>
@@ -126,35 +129,17 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="portfolio-item">
-                                <a href="#">
-                                    <img class="img-portfolio img-responsive" src="static/img/portfolio-1.jpg">
-                                </a>
+                                <img class="img-portfolio img-responsive" src="static/img/portfolio-1.jpg">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="portfolio-item">
-                                <a href="#">
-                                    <img class="img-portfolio img-responsive" src="static/img/portfolio-2.jpg">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="portfolio-item">
-                                <a href="#">
-                                    <img class="img-portfolio img-responsive" src="static/img/portfolio-3.jpg">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="portfolio-item">
-                                <a href="#">
-                                    <img class="img-portfolio img-responsive" src="static/img/portfolio-4.jpg">
-                                </a>
+                                <img class="img-portfolio img-responsive" src="static/img/portfolio-2.jpg">
                             </div>
                         </div>
                     </div>
                     <!-- /.row (nested) -->
-                    <a href="#" class="btn btn-dark">View More Items</a>
+                    <!--<a href="#" class="btn btn-dark">View More Items</a>-->
                 </div>
                 <!-- /.col-lg-10 -->
             </div>
@@ -162,20 +147,20 @@
         </div>
         <!-- /.container -->
     </section>
-    
+
     <section id="table" class="table">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <h2>Polygon datasets</h2>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
-                        <tr class="danger">
+                        <tr class="success">
                             <th>Polygon</th>
                             <th>Area</th>
                             <th>Perimeter</th>
                             <th>Compactness</th>
                             <th>Assymetry</th>
-                            <th>Bounded Index</th>
+                            <th>BoundIndex</th>
                             <th>Contrast</th>
                             <th>Energy</th>
                             <th>Homogenity</th>
@@ -185,46 +170,95 @@
                     </thead>
                     <tbody>
                         <tr class="active">
-                            <td>/index.html</td>
-                            <td>1265</td>
-                            <td>32.3%</td>
-                            <td>$321.33</td>
-                        </tr>
-                        <tr class="success">
-                            <td>/about.html</td>
-                            <td>261</td>
-                            <td>33.3%</td>
-                            <td>$234.12</td>
-                        </tr>
-                        <tr class="warning">
-                            <td>/sales.html</td>
-                            <td>665</td>
-                            <td>21.3%</td>
-                            <td>$16.34</td>
-                        </tr>
-                        <tr class="danger">
-                            <td>/blog.html</td>
-                            <td>9516</td>
-                            <td>89.3%</td>
-                            <td>$1644.43</td>
+                            <td><img src="static/img/polygon27.jpeg"/></td> 
+                            <td>67</td>
+                            <td>42.0</td>
+                            <td>0.037981</td> 
+                            <td>113.87743</td>
+                            <td>1.0</td>
+                            <td>0.093040</td> 
+                            <td>0.999990</td>
+                            <td>0.999998</td>
+                            <td>0.865167</td>
+                            <td>0.000364</td>
                         </tr>
                         <tr>
-                            <td>/404.html</td>
-                            <td>23</td>
-                            <td>34.3%</td>
-                            <td>$23.52</td>
+                            <td><img src="static/img/polygon28.jpeg"/></td> 
+                            <td>150</td>
+                            <td>72.0</td>
+                            <td>0.028932</td>
+                            <td>114.68515</td>
+                            <td>1.0</td>
+                            <td>0.201590</td>
+                            <td>0.999987</td>
+                            <td>0.999996</td>
+                            <td>0.860961</td>
+                            <td>0.000790</td>
                         </tr>
                         <tr>
-                            <td>/services.html</td>
-                            <td>421</td>
-                            <td>60.3%</td>
-                            <td>$724.32</td>
+                            <td><img src="static/img/polygon29.jpeg"/></td> 
+                            <td>43</td>
+                            <td>34.0</td>
+                            <td>0.037197</td> 
+                            <td>289.31428</td> 
+                            <td>1.0</td>
+                            <td>0.077534</td> 
+                            <td>0.999995</td>
+                            <td>0.999998</td>
+                            <td>0.836064</td>
+                            <td>0.000304</td>
                         </tr>
                         <tr>
-                            <td>/blog/post.html</td>
-                            <td>1233</td>
-                            <td>93.2%</td>
-                            <td>$126.34</td>
+                            <td><img src="static/img/polygon30.jpeg"/></td>
+                            <td>110</td>
+                            <td>52.0</td>
+                            <td>0.040688</td>
+                            <td>96.550697</td>
+                            <td>1.0</td>
+                            <td>0.108548</td>
+                            <td>0.999990</td>
+                            <td>0.999998</td>
+                            <td>0.897809</td>
+                            <td>0.000425</td>
+                        </tr>
+                        <tr>
+                            <td><img src="static/img/polygon31.jpeg"/></td>
+                            <td>402</td>
+                            <td>106.0</td>
+                            <td>0.035786</td>
+                            <td>63.003145</td>
+                            <td>1.0</td>
+                            <td>0.186083</td>
+                            <td>0.999971</td>
+                            <td>0.999997</td>
+                            <td>0.947366</td>
+                            <td>0.000729</td>
+                        </tr>
+                        <tr>
+                            <td><img src="static/img/polygon32.jpeg"/></td>
+                            <td>280</td>
+                            <td>102.0</td>
+                            <td>0.026947</td>
+                            <td>58.393611</td>
+                            <td>1.108695</td>
+                            <td>0.232604</td>
+                            <td>0.999978</td>
+                            <td>0.999996</td>
+                            <td>0.909636</td>
+                            <td>0.000912</td>
+                        </tr>
+                        <tr>
+                            <td><img src="static/img/polygon33.jpeg"/></td>
+                            <td>72</td>
+                            <td>60.0</td>
+                            <td>0.020000</td> 
+                            <td>132.68602</td>
+                            <td>1.071428</td>
+                            <td>0.093041</td>
+                            <td>0.999993</td>
+                            <td>0.999998</td>
+                            <td>0.883494</td>
+                            <td>0.000364</td>
                         </tr>
                     </tbody>
                 </table>
@@ -232,24 +266,120 @@
         </div>
     </section>
     
-
-    <section id="query" class="about">
-    	
-			<select id="queries">
-			<option value="allFeatures" onclick="changeImage(this.value)" >Cluster with all features</option>
-			<option value="area100" onclick="changeImage(this.value)">Cluster with area > 100</option>
-			<option value="area_homo" onclick="changeImage(this.value)">Cluster with area>150 and homogenity > 0.99998</option>
-			<option value="perimeter_dissimilarity" onclick="changeImage(this.value)">Cluster with perimeter less than 45 and dissimilarity > 0.004 </option>
-			<option value="boundedIndex" onclick="changeImage(this.value)">Cluster with  bounded Index=1</option>
-			<option value="compactness_correlation" onclick="changeImage(this.value)">Cluster with compactness 0.02 to 0.05 and coorelation > 0.8</option>
-		</select>
-	
+    
+    <section id="select" class="portfolio"> 
+        <div class="col-lg-6">
+            <h3>Select Features</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr class="warning">
+                            <th colspan="2" class="text-center">Geometric</th>
+                            <th colspan="2" class="text-center">Texture</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><h5>Area</h5></td>
+                            <td><input id="ex1" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/></td>
+                            <td><h5>Parameter</h5></td>
+                            <td><input id="ex2" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/></td>
+                        </tr>
+                        <tr>
+                            <td><h5>Compactness</h5></td>
+                            <td><input id="ex3" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/></td>
+                            <td><h5>Assymetry</h5></td>
+                            <td><input id="ex4" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/></td>
+                        </tr>
+                        <tr>
+                            <td><h5>BoundaryIndex</h5></td>
+                            <td><input id="ex5" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/></td>
+                            <td><h5>Contrast</h5></td>
+                            <td><input id="ex6" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/></td>
+                        </tr>
+                        <tr>
+                            <td><h5>Energy</h5></td>
+                            <td><input id="ex7" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/></td>
+                            <td><h5>Homogenity</h5></td>
+                            <td><input id="ex8" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/></td>
+                        </tr>
+                        <tr>
+                            <td><h5>Correlation</h5></td>
+                            <td><input id="ex9" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/></td>
+                            <td><h5>Dissimilarity</h5></td>
+                            <td><input id="ex10" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/></td>
+                        </tr>
+                        <tr>
+                            <td><h5>ASM</h5></td>
+                            <td><input id="ex11" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/></td>
+                            <td colspan="2" class="text-center"><button id="btn-ex" type="submit" class="btn btn-dark">Submit</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </section>
-
-
+    
+    
     <section id="graph" class="graph">
-        <img id="imagebox" src="static/img/path100/allFeatures.png">
+        <div class="col-lg-6">
+            <section id="query" class="about">
+                    <select id="queries">
+                    <option value="allFeatures" onclick="changeImage(this.value)" >Cluster with all features</option>
+                    <option value="area100" onclick="changeImage(this.value)">Cluster with area > 100</option>
+                    <option value="area_homo" onclick="changeImage(this.value)">Cluster with area>150 and homogenity > 0.99998</option>
+                    <option value="perimeter_dissimilarity" onclick="changeImage(this.value)">Cluster with perimeter less than 45 and dissimilarity > 0.004 </option>
+                    <option value="boundedIndex" onclick="changeImage(this.value)">Cluster with  bounded Index=1</option>
+                    <option value="compactness_correlation" onclick="changeImage(this.value)">Cluster with compactness 0.02 to 0.05 and coorelation > 0.8</option>
+                </select>
+            </section>
+
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                Select Cluster with
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#about">All features</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" value="area100" onclick="changeImage(this.value)">Area > 100</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" value="area_homo" onclick="changeImage(this.value)">Area>150 and homogenity > 0.99998</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" value="perimeter_dissimilarity" onclick="changeImage(this.value)">Perimeter less than 45 and dissimilarity > 0.004</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" value="boundedIndex" onclick="changeImage(this.value)">Bounded Index=1</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" value="compactness_correlation" onclick="changeImage(this.value)">Compactness 0.02 to 0.05 and Coorelation > 0.8</a></li>
+              </ul>
+            </div>
+        </div>
     </section>
+    
+    <!-- Portfolio -->
+    <section id="cluster" class="cluster">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h2>Clusters</h2>
+                    <hr class="small">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="portfolio-item">
+                                <img id="imagebox" class="img-responsive" src="static/img/path100/allFeatures.png">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="portfolio-item">
+                                <img id="imagebox" class="img-responsive" src="static/img/path100/dbscan/area100.png">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row (nested) -->
+                    <!--<a href="#" class="btn btn-dark">View More Items</a>-->
+                </div>
+                <!-- /.col-lg-10 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+    
     
     <!-- About -->
 <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
@@ -269,7 +399,7 @@
                                 <h4>
                                     <strong>Animesh</strong>
                                 </h4>
-                                <p>Computer Science<br>Stony Brook University</p>
+                                <p>Thinker<br>Stony Brook University</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
@@ -281,7 +411,7 @@
                                 <h4>
                                     <strong>Mehak</strong>
                                 </h4>
-                                <p>Computer Science<br>Stony Brook University</p>
+                                <p>Navigator<br>Stony Brook University</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
@@ -293,7 +423,7 @@
                                 <h4>
                                     <strong>Srigowri</strong>
                                 </h4>
-                                <p>Computer Science<br>Stony Brook University</p>
+                                <p>Researcher<br>Stony Brook University</p>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
@@ -305,7 +435,7 @@
                                 <h4>
                                     <strong>Sumit</strong>
                                 </h4>
-                                <p>Computer Science<br>Stony Brook University</p>
+                                <p>Engineer<br>Stony Brook University</p>
                             </div>
                         </div>
                     </div>
@@ -324,6 +454,9 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="static/js/bootstrap.min.js"></script>
 
+    <!-- Bootstrap Slider JavaScript -->
+    <script src="static/js/bootstrap-slider.js"></script>
+    
     <!-- Custom Theme JavaScript -->
     <script>
     // Closes the sidebar menu
@@ -348,6 +481,46 @@
     $("#doc-toggle").click(function(e) {
         e.preventDefault();
         $("#sidebar-wrapper").toggleClass("active");
+    });
+        
+    $("#cluster").click(function(e) {
+      var offset = $(this).offset();
+      var relativeX = (e.pageX - offset.left);
+      var relativeY = (e.pageY - offset.top);
+      //alert(relativeX+':'+relativeY);
+      $(".graph-val").val(relativeX+':'+relativeY);
+    });
+        
+    // With JQuery
+    $("#ex1").slider({});$("#ex2").slider({});$("#ex3").slider({});$("#ex4").slider({});$("#ex5").slider({});$("#ex6").slider({});
+    $("#ex7").slider({});$("#ex8").slider({});$("#ex9").slider({});$("#ex10").slider({});$("#ex11").slider({});
+        
+    /* attach a submit handler to the form */
+    $("#btn-ex").click(function() {
+        
+        var arrFeature = "";
+        for(var i=1; i<=11; i++)
+        {
+            $slider = $('#ex'+i);
+            arrFeature += $slider.data('slider').getValue();
+            arrFeature += ";"
+        }
+        alert(arrFeature);
+        /* get some values from elements on the page: */
+        /*var $form = $(this),
+            term = $form.find('input[name="s"]').val(),
+            url = $form.attr('action');*/
+
+        /* Send the data using post */
+        /*var posting = $.post(url, {
+            s: term
+        });*/
+
+        /* Put the results in a div */
+        /*posting.done(function(data) {
+            var content = $(data).find('#content');
+            $("#result").empty().append(content);
+        });*/
     });
 
     // Scrolls to the selected menu item on the page
