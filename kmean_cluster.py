@@ -52,7 +52,7 @@ def plot_clusters(orig, pred, nx, ny, fo, legend=True):
   p0 = plt.plot(data[pred==0,nx],data[pred==0,ny],'ro',label='Cluster 1')
   p2 = plt.plot(data[pred==2,nx],data[pred==2,ny],'go',label='Cluster 2')
   p1 = plt.plot(data[pred==1,nx],data[pred==1,ny],'bo',label='Cluster 3')
-
+  label= None
   lx = p1[0].axes.set_xlabel('')
   ly = p1[0].axes.set_ylabel(ylabels[ny])
   tt= plt.title('Polygon Dataset, KMeans clustering with K=3')
@@ -60,6 +60,7 @@ def plot_clusters(orig, pred, nx, ny, fo, legend=True):
     ll=plt.legend()
   plt.savefig(dataDir + fo)
   plt.ion()
+  plt.clf()
   return (p0, p1, p2)
 
 def main(fi,fo):
@@ -70,3 +71,8 @@ def main(fi,fo):
 	c = km.predict(X) # classify into three clusters
 	
 	(pl0,pl1,pl2) = plot_clusters(X,c,3,2,fo) # column 3 GDP, vs column 2 infant mortality. Note indexing is 0 based
+        pl0 = None
+        pl1 = None
+        pl2 = None
+        X = None
+        c = None
