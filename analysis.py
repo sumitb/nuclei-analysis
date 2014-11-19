@@ -115,59 +115,93 @@ def variance(list):
    return var/len(list)
 
 #Cluster based on filters
-def filteredCluster(f):
-	fp = open(f,'r')
-	fw1 = open(dataDir+'area100.csv','w')
-	fw2 = open(dataDir+'compactness_correlation.csv','w')
-	fw3 = open(dataDir+'area_homogenity.csv','w')
-	fw4 = open(dataDir+'permimeter_dissimilarity.csv','w')
-	fw5 = open(dataDir+'boundaryIndex.csv','w')
-	i=0
-	data = fp.readlines()
-    	for line in data:
-                i = i+1
-                print (i)
-                value = line.split()
-                Area = float(value[0])
-                perimeter = float(value[1])
-                compactness = float(value[2])
-                assym = float(value[3])
-                BoundaryIndex = float(value[4])
-		contrast = float(value[5])
-		energy = float(value[6])
-		homogeneity = float(value[7])
-		correlation = float(value[8])
-		dissimilarity = float(value[9])
-		ASM = float(value[10])
-                # filter 1: area > 100
-                if Area > 100:
-			fw1.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+ ' '+
-        str(contrast) + ' '+  str(energy)+ ' '  +  str(homogeneity)+ ' '  + str(correlation)+ ' '  + str(dissimilarity)+ ' '  + str(ASM)+"\n")
+def filteredCluster(paraList):
 	
-		# filter 2: compactness 0.02-0.05 and correlation > 0.8 
-		if compactness > 0.02 and compactness < 0.05 and correlation > 0.8: 
-			fw2.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+ ' '+
-        str(contrast) + ' '+  str(energy)+ ' '  +  str(homogeneity)+ ' '  + str(correlation)+ ' '  + str(dissimilarity)+ ' '  + str(ASM)+"\n")
-		
-		# filter 3: area > 150 and homogenityi > 0.999998
-		if Area > 150 and homogeneity > 0.999998:
-			fw3.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+ ' '+
-        str(contrast) + ' '+  str(energy)+ ' '  +  str(homogeneity)+ ' '  + str(correlation)+ ' '  + str(dissimilarity)+ ' '  + str(ASM)+"\n")
+    ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
+    fp = open(ftPath,'r')
+    fw = open(dataDir+'myquery.csv','w')
+    
+    data = fp.readlines()
+    myquery = ""
+    #print "read start"
+    for line in data:
+        value = line.split()
+        Area = float(value[0])
+        perimeter = float(value[1])
+        compactness = float(value[2])
+        assym = float(value[3])
+        BoundaryIndex = float(value[4])
+        contrast = float(value[5])
+        energy = float(value[6])
+        homogeneity = float(value[7])
+        correlation = float(value[8])
+        dissimilarity = float(value[9])
+        ASM = float(value[10])
+        #print "read done"
+        for para in paraList:
+            if para[0]=='Area':
+                min = para[1]
+                max = para[2]
+                #print "inside area" 
+                if( Area >min and Area < max):
+                    myquery += str(Area) + " "
 
-		#filter 4: perimeter < 45 and dissimilarity > 0.0004
-		if perimeter < 45 and dissimilarity > 0.0004:
-			fw4.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+ ' '+
-        str(contrast) + ' '+  str(energy)+ ' '  +  str(homogeneity)+ ' '  + str(correlation)+ ' '  + str(dissimilarity)+ ' '  + str(ASM)+"\n") 
-		
-		#filter 5: boundaryIndex = 1
-		if BoundaryIndex == 1:
-			fw5.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+ ' '+
-        str(contrast) + ' '+  str(energy)+ ' '  +  str(homogeneity)+ ' '  + str(correlation)+ ' '  + str(dissimilarity)+ ' '  + str(ASM)+"\n")
+            elif para[0]=='perimeter':
+                min = para[1]
+                max = para[2]
+                #print "inside para"
+                if( perimeter >min and perimeter < max):
+                    myquery += str(perimeter) + " "
+            elif para[0]=='compactness':
+                min = para[1]
+                max = para[2]
+                if( compactness >min and compactness < max):
+                    myquery += str(compactness) + " "
+            elif para[0]=='assym':
+                min = para[1]
+                max = para[2]
+                if( assym >min and assym < max):
+                    myquery += str(assym) + " "
+            elif para[0]=='BoundaryIndex':
+                min = para[1]
+                max = para[2]
+                if( BoundaryIndex >min and BoundaryIndex < max):
+                    myquery += str(BoundaryIndex) + " "
+            elif para[0]=='contrast':
+                min = para[1]
+                max = para[2]
+                if( contrast >min and contrast < max):
+                    myquery += str(contrast) + " "
+            elif para[0]=='energy':
+                min = para[1]
+                max = para[2]
+                if( energy >min and energy < max):
+                    myquery += str(energy) + " "
+            elif para[0]=='homogeneity':
+                min = para[1]
+                max = para[2]
+                if( homogeneity >min and homogeneity < max):
+                    myquery += str(homogeneity) + " "
+            elif para[0]=='correlation':
+                min = para[1]
+                max = para[2]
+                if( correlation >min and correlation < max):
+                    myquery += str(correlation) + " "
+            elif para[0]=='dissimilarity':
+                min = para[1]
+                max = para[2]
+                if( dissimilarity >min and dissimilarity < max):
+                    myquery += str(dissimilarity) + " "
+            elif para[0]=='ASM':
+                min = para[1]
+                max = para[2]
+                if( ASM >min and ASM < max):
+                    myquery += str(ASM) + " "
+        print("writing data: "+myquery)
+        fw.write(myquery+"\n")
+        
 
-ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
-
-
-fileNum = '05'
+fileNum = '00'
 dataDir = 'data/path-image-1' + str(fileNum) + '.tif/'
 
 # Load path-image from .jpg
@@ -198,7 +232,7 @@ with open(txtPath, 'w') as fout:
 
 numPoly = []
 polyId = 1
-
+print(txt)
 # Convert polygons to numpy array
 for line in txt:
     poly = line.split('\t')
@@ -310,5 +344,3 @@ for line in txt:
         str(contrast) + ' '+  str(energy)+ ' '  +  str(homogeneity)+ ' '  + str(correlation)+ ' '  + str(dissimilarity)+ ' '  + str(ASM)+"\n")
 
     #/////////////////////////////////////////////////////////////////////////////////////
-
-filteredCluster(ftPath)
