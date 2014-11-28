@@ -1,5 +1,3 @@
-#from kmean_cluster import main
-#from plot_dbscan import start_dbscan
 from os import getcwd
 #Cluster based on filters
 fileNum = '00'
@@ -14,7 +12,6 @@ def filteredCluster(paraList):
     
     data = fp.readlines()
     for i,para in enumerate(paraList):
-        #print f
         if i == 0:
             filter_area = para
         if i == 1:
@@ -39,7 +36,7 @@ def filteredCluster(paraList):
             filter_asm = para
     #myquery = ""
     print "read start"
-    i = 0
+    #i = 0
     for line in data:
         value = line.split()
         area = float(value[0])
@@ -53,37 +50,51 @@ def filteredCluster(paraList):
         correlation = float(value[8])
         dissimilarity = float(value[9])
         asm = float(value[10])
-        i +=1
-        if i >1000:
-            break
+        #i +=1
+        #if i >1000:
+            #break
+        feature = ""
+        if(filter_area and (area >=filter_area[0] and area <filter_area[1])):
+            feature += str(area) + " "
+      
+        if(filter_perimeter and (perimeter >=filter_perimeter[0] and perimeter <filter_perimeter[1])):
+            feature += str(perimeter) + " "
+
+        if(filter_compactness and (compactness >=filter_compactness[0] and compactness <filter_compactness[1])):
+            feature += str(compactness) + " "
+
+        if(filter_assym and (assym >=filter_assym[0] and assym <filter_assym[1])):
+            feature += str(assym) + " "
         
-        if ((area >filter_area[0] and area <filter_area[1]) or
-            (perimeter >filter_perimeter[0] and perimeter <filter_perimeter[1]) or
-            (compactness >filter_compactness[0] and compactness <filter_compactness[1]) or
-            (assym >filter_assym[0] and assym <filter_assym[1]) or
-            (BoundaryIndex >filter_BoundaryIndex[0] and BoundaryIndex >filter_BoundaryIndex[1]) or
-            (contrast >filter_contrast[0] and contrast <filter_contrast[1]) or
-            (energy >filter_energy[0] and energy <filter_energy[1]) or
-            (homogeneity >filter_homogeneity[0] and homogeneity <filter_homogeneity[1]) or
-            (correlation >filter_correlation[0] and correlation <filter_correlation[1]) or
-            (dissimilarity >filter_dissimilarity[0] and dissimilarity <filter_dissimilarity[1])or
-            (asm >filter_asm[0] and asm <filter_asm[1]) ):
-          
-          print "found"
-          fw.write(str(area)+ " "+str(perimeter)+ " "+str(compactness)+ " "+str(assym)+ " "+
-            str(BoundaryIndex)+ " "+str(contrast)+ " "+str(energy)+ " "+str(homogeneity)+ " "+
-            str(correlation)+ " "+str(dissimilarity)+ "\n")
+        if(filter_BoundaryIndex and (BoundaryIndex >=filter_BoundaryIndex[0] and BoundaryIndex >filter_BoundaryIndex[1])):
+            feature += str(BoundaryIndex) + " "
+
+        if(filter_contrast and (contrast >=filter_contrast[0] and contrast <filter_contrast[1])):
+            feature += str(contrast) + " "
+        
+        if(filter_energy and (energy >=filter_energy[0] and energy <filter_energy[1])):
+            feature += str(energy) + " "
+        
+        if(filter_homogeneity and (homogeneity >=filter_homogeneity[0] and homogeneity <filter_homogeneity[1])):
+            feature += str(homogeneity) + " "
+        
+        if(filter_correlation and (correlation >=filter_correlation[0] and correlation <filter_correlation[1])):
+            feature += str(correlation) + " "
+        
+        if(filter_dissimilarity and (dissimilarity >=filter_dissimilarity[0] and dissimilarity <filter_dissimilarity[1])):
+            feature += str(dissimilarity) + " "
+        
+        if(filter_asm and (asm >=filter_asm[0] and asm <filter_asm[1])):
+            feature += str(asm) + " "
+        
+        if(feature != ""):
+            print "found"
+            fw.write(feature + "\n")
         else:
             print("not found")
 
-    main("filterFeature.csv","myfeature.png")
-    start_dbscan("filterFeature_dbscan.csv","myfeature_dbscan.png")
-    
-
-def sample_parsing():
-    myfile = open(ftPath,'r')
-    data = myfile.readlines()
-    for line in data:
-        print line
-
-sample_parsing()
+#filteredCluster(0)
+from kmean_cluster import start_kmeans
+from plot_dbscan import start_dbscan
+start_kmeans("filterFeature.csv","filterFeature.png")
+start_dbscan("filterFeature.csv","filterFeature.png")
