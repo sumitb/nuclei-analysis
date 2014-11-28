@@ -75,7 +75,7 @@ def start_kmeans(fi,fo):
   
   (pl0,pl1,pl2) = plot_clusters(X,c,0,1,fo) # column 0 AREA, vs column 1 Perimeter . Note indexing is 0 based
 #for testing
-start_kmeans("path-image-100.seg.000000.000000.csv","myfilter_test.png")
+#start_kmeans("path-image-100.seg.000000.000000.csv","myfilter_test.png")
 ##### cluster data into K=1..10 clusters #####
 """X = load_data("filterFeature.csv")
 K, KM, centroids,D_k,cIdx,dist,avgWithinSS = run_kmeans(X,10)
