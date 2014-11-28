@@ -85,4 +85,9 @@ def start_dbscan(fi,fo):
 
     pl.title('Estimated number of clusters: %d' % n_clusters_)
     pl.savefig(dataDir + "dbscan/"+fo )
+    pl.xlabel('Area of polygons')
+    pl.ylabel('Perimeter of polygons')
+ 
     pl.ion()
+#for testing
+start_dbscan("path-image-100.seg.000000.000000.csv","myfilter_test.png")
