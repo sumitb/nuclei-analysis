@@ -4,13 +4,13 @@ from scipy.spatial import distance
 from sklearn.cluster import DBSCAN
 from sklearn import metrics
 
-
+from os import getcwd
 ##############################################################################
 # Generate sample data
 #centers = [[1, 1], [-1, -1], [1, -1]]
 #X, labels_true = make_blobs(n_samples=750, centers=centers, cluster_std=0.4)
 fileNum = '00'
-dataDir = 'data/path-image-1' + str(fileNum) + '.tif/'
+dataDir = getcwd()+ '/../data/path-image-1' + str(fileNum) + '.tif/'
 
 
 def load_data(fi):
@@ -85,5 +85,9 @@ def start_dbscan(fi,fo):
 
     pl.title('Estimated number of clusters: %d' % n_clusters_)
     pl.savefig(dataDir + "dbscan/"+fo )
-    #pl.savefig('dbscan_clusters.png')
+    pl.xlabel('Area of polygons')
+    pl.ylabel('Perimeter of polygons')
+ 
     pl.ion()
+#for testing
+start_dbscan("path-image-100.seg.000000.000000.csv","myfilter_test.png")
