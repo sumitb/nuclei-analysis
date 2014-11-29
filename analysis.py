@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import itertools
 import math
-import os
 
 from skimage.io import *
 from skimage.draw import polygon
@@ -343,4 +342,5 @@ for line in txt:
     ft.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+ ' '+
         str(contrast) + ' '+  str(energy)+ ' '  +  str(homogeneity)+ ' '  + str(correlation)+ ' '  + str(dissimilarity)+ ' '  + str(ASM)+"\n")
 
+ft.close()
     #/////////////////////////////////////////////////////////////////////////////////////

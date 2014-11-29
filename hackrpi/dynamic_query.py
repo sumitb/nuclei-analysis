@@ -9,8 +9,8 @@ ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
 def filteredCluster(paraList):
 
     fp = open(ftPath,'r')
-    filterFeature = dataDir+'filterFeature.csv' 
-    fw = open(filterFeature,'w')
+    fName = dataDir+'filterFeature.csv' 
+    fw = open(fName,'w')
     featureIndexList = []
     data = fp.readlines()
     for i,para in enumerate(paraList):
@@ -51,11 +51,12 @@ def filteredCluster(paraList):
             #print("not found")
         
     #filteredCluster(0)
+    fw.close()
     from kmean_cluster import start_kmeans
     from plot_dbscan import start_dbscan
     start_kmeans("filterFeature.csv","filterFeature.png",featureIndexList)
-    start_dbscan("filterFeature.csv","filterFeature.png")
+    start_dbscan("filterFeature.csv","filterFeature.png",featureIndexList)
 
 #for testing
-#paraList = [[0,100],[0,100],[0,100],[0,100],None,None,None,None,None,None,None]
+#paraList = [[0,100],[0,100],[0,100],[0,100],None,None,None,None,None,None,None,None]
 #filteredCluster(paraList)

@@ -12,6 +12,32 @@ from os import getcwd
 fileNum = '00'
 dataDir = getcwd()+ '/../data/path-image-1' + str(fileNum) + '.tif/'
 
+def labels(featureNum):
+  if featureNum == 0:
+    label = "Area"
+  elif featureNum == 1:
+    label = "Perimeter"
+  elif featureNum == 2:
+    label = "Compactness"
+  elif featureNum == 3:
+    label = "Asymmetry"
+  elif featureNum == 4:
+    label = "BoundaryIndex"
+  elif featureNum == 5:
+    label = "Compactness"
+  elif featureNum == 6:
+    label = "Contrast"
+  elif featureNum == 7:
+    label = "Dissimilarity"
+  elif featureNum == 8:
+    label = "Angular Second moment"
+  elif featureNum == 9:
+    label = "Energy"
+  elif featureNum == 10:
+    label = "Homegeneity"
+  return label
+
+
 
 def load_data(fi):
   fName = dataDir + fi
@@ -21,12 +47,7 @@ def load_data(fi):
   return X
   
 
-"""fName = ('hackrpi/Allfeatures.csv')
-fp = open(fName)
-X = np.loadtxt(fp)
-fp.close()
-#print X"""
-def start_dbscan(fi,fo):
+def start_dbscan(fi,fo,featureIndexList=[0,1]):
 ##############################################################################
     # Compute similarities
     X = load_data(fi)
@@ -45,6 +66,8 @@ def start_dbscan(fi,fo):
     n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
 
     print 'Estimated number of clusters: %d' % n_clusters_
+    if n_clusters_ ==0:
+        return
     #print "Homogeneity: %0.3f" % metrics.homogeneity_score(labels_true, labels)
     #print "Completeness: %0.3f" % metrics.completeness_score(labels_true, labels)
     #print "V-measure: %0.3f" % metrics.v_measure_score(labels_true, labels)
@@ -85,8 +108,8 @@ def start_dbscan(fi,fo):
 
     pl.title('Estimated number of clusters: %d' % n_clusters_)
     pl.savefig(dataDir + "dbscan/"+fo )
-    pl.xlabel('Area of polygons')
-    pl.ylabel('Perimeter of polygons')
+    pl.xlabel(labels(featureIndexList[0]))
+    pl.ylabel(labels(featureIndexList[1]))
  
     pl.ion()
 #for testing
