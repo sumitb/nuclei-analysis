@@ -90,4 +90,4 @@ def start_dbscan(fi,fo):
  
     pl.ion()
 #for testing
-start_dbscan("path-image-100.seg.000000.000000.csv","myfilter_test.png")
+#start_dbscan("path-image-100.seg.000000.000000.csv","myfilter_test.png")

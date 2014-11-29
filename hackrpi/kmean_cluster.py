@@ -33,6 +33,7 @@ def run_kmeans(X, n=10):
   return (_K, _KM, _centroids, _D_k, _cIdx, _dist, _avgWithinSS)
 
 def plot_elbow_curve(kIdx, K, avgWithinSS):
+  plt.clf()
   fig = plt.figure()
   ax = fig.add_subplot(111)
   ax.plot(K, avgWithinSS, 'b*-')
@@ -47,6 +48,7 @@ def plot_elbow_curve(kIdx, K, avgWithinSS):
 #/////////////////////////////////////////////////////////////////////////////////
 
 def plot_clusters(orig, pred, nx, ny, fo, legend=True):
+  plt.clf()
   data = orig
   ylabels = { 0:'',1:'',2:''}
   # plot data into three clusters based on value of c
@@ -62,12 +64,13 @@ def plot_clusters(orig, pred, nx, ny, fo, legend=True):
   if legend:
     ll=plt.legend()
   plt.savefig(dataDir + "kmeans/" + fo)
-  plt.show()
-  plt.clf()
+  plt.ion()
+  
   return (p0, p1, p2)
 
 def start_kmeans(fi,fo):
   X = load_data(fi)
+  run_kmeans();
   kIdx = 3
   km = KMeans(kIdx, init='k-means++') # initialize
   km.fit(X)

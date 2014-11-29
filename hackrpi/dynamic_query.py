@@ -93,8 +93,8 @@ def filteredCluster(paraList):
         else:
             print("not found")
 
-#filteredCluster(0)
-from kmean_cluster import start_kmeans
-from plot_dbscan import start_dbscan
-start_kmeans("filterFeature.csv","filterFeature.png")
-start_dbscan("filterFeature.csv","filterFeature.png")
+    #filteredCluster(0)
+    from kmean_cluster import start_kmeans
+    from plot_dbscan import start_dbscan
+    start_kmeans("filterFeature.csv","filterFeature.png")
+    start_dbscan("filterFeature.csv","filterFeature.png")
