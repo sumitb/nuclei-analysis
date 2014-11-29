@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request
-from dynamic_query import filteredCluster
 app = Flask(__name__)
 
 @app.route('/')
@@ -28,6 +27,8 @@ def landing():
 
 @app.route('/feature_select', methods=['POST'])
 def feature_select():
+	from dynamic_query import filteredCluster
+
 	print "I'm here!"
 	if request.method == 'POST':
 		print "POST method"
@@ -49,4 +50,5 @@ def feature_select():
 	return None
 
 if __name__ == '__main__':
+	print "hello"
 	app.run(debug=True)
