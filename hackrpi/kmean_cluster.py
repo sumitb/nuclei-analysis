@@ -1,18 +1,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+import os
 from sklearn.cluster import KMeans
 from scipy.cluster.vq import kmeans,vq
 from scipy.spatial.distance import cdist
-from os import getcwd
+
 fileNum = '00'
 #dataDir = 'data/path-image-1' + str(fileNum) + '.tif/'
 #ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
-dataDir = getcwd() + '/../data/path-image-1' + str(fileNum) + '.tif/'
+curDir = os.path.dirname(os.path.realpath("__file__"))
+parDir = os.path.abspath(os.path.join(curDir, os.pardir))
+dataDir = parDir + '/data/path-image-1' + str(fileNum) + '.tif/'
 
 def load_data(fi):
   fName = dataDir + fi
-  fp = open(fName)
+  fp = open(fName,'r')
   XX = np.loadtxt(fp)
   fp.close()
   return XX
@@ -33,6 +35,7 @@ def run_kmeans(X, n=10):
   return (_K, _KM, _centroids, _D_k, _cIdx, _dist, _avgWithinSS)
 
 def plot_elbow_curve(kIdx, K, avgWithinSS):
+  plt.clf()
   fig = plt.figure()
   ax = fig.add_subplot(111)
   ax.plot(K, avgWithinSS, 'b*-')
@@ -42,11 +45,37 @@ def plot_elbow_curve(kIdx, K, avgWithinSS):
   plt.xlabel('Number of clusters')
   plt.ylabel('Average within-cluster sum of squares')
   tt = plt.title('Elbow for KMeans clustering')
-  plt.show()
+  plt.ion()
   #return(fig,ax)
 #/////////////////////////////////////////////////////////////////////////////////
 
+def labels(featureNum):
+  if featureNum == 0:
+    label = "Area"
+  elif featureNum == 1:
+    label = "Perimeter"
+  elif featureNum == 2:
+    label = "Compactness"
+  elif featureNum == 3:
+    label = "Asymmetry"
+  elif featureNum == 4:
+    label = "BoundaryIndex"
+  elif featureNum == 5:
+    label = "Compactness"
+  elif featureNum == 6:
+    label = "Contrast"
+  elif featureNum == 7:
+    label = "Dissimilarity"
+  elif featureNum == 8:
+    label = "Angular Second moment"
+  elif featureNum == 9:
+    label = "Energy"
+  elif featureNum == 10:
+    label = "Homegeneity"
+  return label
+
 def plot_clusters(orig, pred, nx, ny, fo, legend=True):
+  plt.clf()
   data = orig
   ylabels = { 0:'',1:'',2:''}
   # plot data into three clusters based on value of c
@@ -54,31 +83,28 @@ def plot_clusters(orig, pred, nx, ny, fo, legend=True):
   p2 = plt.plot(data[pred==2,nx],data[pred==2,ny],'go',label='Cluster 2')
   p1 = plt.plot(data[pred==1,nx],data[pred==1,ny],'bo',label='Cluster 3')
   lx = p1[0].axes.set_xlabel('')
-  ly = p1[0].axes.set_ylabel(ylabels[ny])
+  ly = p1[0].axes.set_ylabel(ylabels[1])
   tt= plt.title('Polygon Dataset, KMeans clustering with K=3')
-  plt.xlabel('Area of polygons')
-  plt.ylabel('Perimeter of polygons')
+  plt.xlabel(labels(nx))
+  plt.ylabel(labels(ny))
  
   if legend:
     ll=plt.legend()
   plt.savefig(dataDir + "kmeans/" + fo)
-  plt.show()
-  plt.clf()
+  plt.ion()
+  
   return (p0, p1, p2)
-
-def start_kmeans(fi,fo):
+#Added:featureindex = [0,1,3,5] means feature no:0,1,3,5 selected by user out of 0-10 feature no.
+def start_kmeans(fi,fo,featureIndexList=[0,1]):
   X = load_data(fi)
+  K, KM, centroids,D_k,cIdx,dist,avgWithinSS = run_kmeans(X,10)
   kIdx = 3
+  plot_elbow_curve(kIdx, K, avgWithinSS)
   km = KMeans(kIdx, init='k-means++') # initialize
   km.fit(X)
   c = km.predict(X) # classify into three clusters
-  
-  (pl0,pl1,pl2) = plot_clusters(X,c,0,1,fo) # column 0 AREA, vs column 1 Perimeter . Note indexing is 0 based
+   
+  (pl0,pl1,pl2) = plot_clusters(X,c,featureIndexList[0],featureIndexList[1],fo) # column 0 AREA, vs column 1 Perimeter . Note indexing is 0 based
 #for testing
-#start_kmeans("path-image-100.seg.000000.000000.csv","myfilter_test.png")
-##### cluster data into K=1..10 clusters #####
-"""X = load_data("filterFeature.csv")
-K, KM, centroids,D_k,cIdx,dist,avgWithinSS = run_kmeans(X,10)
-print cIdx
-kIdx =2
-plot_elbow_curve(kIdx, K, avgWithinSS)"""
+#featureList = [2,3]
+#start_kmeans("path-image-100.seg.000000.000000.csv","myfilter_test.png",featureList)

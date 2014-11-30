@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import itertools
 import math
-import os
 
 from skimage.io import *
 from skimage.draw import polygon
@@ -12,7 +11,7 @@ from skimage.measure import label, regionprops
 from PIL import Image, ImageDraw
 
 
-fileNum = '00'
+fileNum = '01'
 dataDir = 'data/path-image-1' + str(fileNum) + '.tif/'
 
 
@@ -230,7 +229,43 @@ with open(txtPath, 'r') as fin:
 with open(txtPath, 'w') as fout:
     fout.writelines(data[1:])
 
+def drawPoly(polyIdList):
+    count = 1
+    im = Image.open(imgPath)
+    #draw = ImageDraw.Draw(im)
+    for line in txt:
+        if count in polyIdList:
+            poly = line.split('\t')
+            poly = poly[51:]
+            poly = poly[0]
+            poly = poly.replace(';', ',')
+            		   
+            mypoly = []
+            polyList = poly.split(',')
+            while '' in polyList:
+               polyList.remove('')
+            if '\n' in polyList:
+               polyList.remove('\n')
+            for i, num in enumerate(polyList):
+               polyList[i] = int(float(polyList[i]))
+
+            # Draw a line from every co-ordinate with thickness of 1 px
+            for x, y in pairwise(polyList):
+               mypoly.append((x, y))
+
+            P = np.array(mypoly)
+            #draw.line((0, 0) + im.size, fill=128)
+            #draw.line((0, im.size[1], im.size[0], 0), fill=128)
+            #draw.polygon(mypoly, outline=1, fill=128)
+            ImageDraw.Draw(im).polygon(mypoly, outline=(0,0,0,128), fill=(0,0,0,128))
+            print mypoly
+			#del draw
+        count+=1
+    im.save(dataDir+"uiQueryPolyMark.jpg")
+	
 numPoly = []
+#polyIdList = [1,2,3,4,5,6]
+#drawPoly(polyIdList)
 polyId = 1
 print(txt)
 # Convert polygons to numpy array
@@ -285,7 +320,7 @@ for line in txt:
     #print "box", box
     #key = im.crop(box)
     #key.save("poly_images/polygon" + str(polyId) + ".jpg")
-    polyId += 1
+    #polyId += 1
  
     #2.Perimeter
     perimeter= calc_peri(mypoly)
@@ -340,7 +375,8 @@ for line in txt:
 
 
     #/////////////////////////////////////////////////////////////////////////////////////
-    ft.write(str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+ ' '+
+    ft.write(str(polyId)+' '+str(Area) + ' ' + str(perimeter) + ' ' + str(compactness) + ' ' + str(assym) + ' '+str(BoundaryIndex)+ ' '+
         str(contrast) + ' '+  str(energy)+ ' '  +  str(homogeneity)+ ' '  + str(correlation)+ ' '  + str(dissimilarity)+ ' '  + str(ASM)+"\n")
-
+    polyId += 1
+ft.close()
     #/////////////////////////////////////////////////////////////////////////////////////
