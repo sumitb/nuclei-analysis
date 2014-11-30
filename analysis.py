@@ -114,7 +114,7 @@ def variance(list):
    return var/len(list)
 
 #Cluster based on filters
-def filteredCluster(paraList):
+"""def filteredCluster(paraList):
 	
     ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
     fp = open(ftPath,'r')
@@ -197,11 +197,9 @@ def filteredCluster(paraList):
                 if( ASM >min and ASM < max):
                     myquery += str(ASM) + " "
         print("writing data: "+myquery)
-        fw.write(myquery+"\n")
+        fw.write(myquery+"\n")"""
         
 
-fileNum = '00'
-dataDir = 'data/path-image-1' + str(fileNum) + '.tif/'
 
 # Load path-image from .jpg
 imgPath = dataDir + 'path-image-1' + str(fileNum) + '.000000.000000.jpg'
@@ -229,45 +227,13 @@ with open(txtPath, 'r') as fin:
 with open(txtPath, 'w') as fout:
     fout.writelines(data[1:])
 
-def drawPoly(polyIdList):
-    count = 1
-    im = Image.open(imgPath)
-    #draw = ImageDraw.Draw(im)
-    for line in txt:
-        if count in polyIdList:
-            poly = line.split('\t')
-            poly = poly[51:]
-            poly = poly[0]
-            poly = poly.replace(';', ',')
-            		   
-            mypoly = []
-            polyList = poly.split(',')
-            while '' in polyList:
-               polyList.remove('')
-            if '\n' in polyList:
-               polyList.remove('\n')
-            for i, num in enumerate(polyList):
-               polyList[i] = int(float(polyList[i]))
 
-            # Draw a line from every co-ordinate with thickness of 1 px
-            for x, y in pairwise(polyList):
-               mypoly.append((x, y))
-
-            P = np.array(mypoly)
-            #draw.line((0, 0) + im.size, fill=128)
-            #draw.line((0, im.size[1], im.size[0], 0), fill=128)
-            #draw.polygon(mypoly, outline=1, fill=128)
-            ImageDraw.Draw(im).polygon(mypoly, outline=(0,0,0,128), fill=(0,0,0,128))
-            print mypoly
-			#del draw
-        count+=1
-    im.save(dataDir+"uiQueryPolyMark.jpg")
 	
 numPoly = []
 #polyIdList = [1,2,3,4,5,6]
 #drawPoly(polyIdList)
 polyId = 1
-print(txt)
+#print(txt)
 # Convert polygons to numpy array
 for line in txt:
     poly = line.split('\t')

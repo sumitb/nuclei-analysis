@@ -5,7 +5,7 @@ from sklearn.cluster import KMeans
 from scipy.cluster.vq import kmeans,vq
 from scipy.spatial.distance import cdist
 
-fileNum = '00'
+fileNum = '01'
 #dataDir = 'data/path-image-1' + str(fileNum) + '.tif/'
 #ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
 curDir = os.path.dirname(os.path.realpath("__file__"))
@@ -103,8 +103,8 @@ def start_kmeans(fi,fo,featureIndexList=[0,1]):
   km = KMeans(kIdx, init='k-means++') # initialize
   km.fit(X)
   c = km.predict(X) # classify into three clusters
-   
+  #print c[:800]
   (pl0,pl1,pl2) = plot_clusters(X,c,featureIndexList[0],featureIndexList[1],fo) # column 0 AREA, vs column 1 Perimeter . Note indexing is 0 based
 #for testing
-#featureList = [2,3]
-#start_kmeans("path-image-100.seg.000000.000000.csv","myfilter_test.png",featureList)
+#featureList = [8,9]
+#start_kmeans("path-image-100.seg.000000.000000_original.csv","myfilter_test.png",featureList)
