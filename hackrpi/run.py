@@ -29,7 +29,7 @@ def landing():
 def feature_select():
 	from dynamic_query import filteredCluster
 
-	print "I'm here!"
+	#print "I'm here!"
 	if request.method == 'POST':
 		print "POST method"
 	featureList = request.form.get('featureList', '')
@@ -38,17 +38,16 @@ def feature_select():
 	featureStr = []
 	for flist in featureList:
 		attrib = flist.split(",")
-		print float(attrib[0]), float(attrib[1])
+		#print float(attrib[0]), float(attrib[1])
 		featureStr.append([float(attrib[0]), float(attrib[1])])
 	#for f in featureStr:
 	#pass
 	#print f, type(f)
 	#featureValue.append([int(f[0]), int(f[1])])
-	print featureStr
+	#print featureStr
 	filteredCluster(featureStr)
 	#return jsonify(result=a + b)
 	return None
 
 if __name__ == '__main__':
-	print "hello"
 	app.run(debug=True)

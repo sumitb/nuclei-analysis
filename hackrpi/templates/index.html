@@ -30,27 +30,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <script type="text/javascript">
-    function changeImage(value){
-
-    	var img = document.getElementById("imagebox");
-    	console.log(value)
-    	if (value=="area100")
-    	   img.src="/static/img/path100/area100.png"; 
-    	if (value=="allFeatures") 
-    	   img.src="/static/img/path100/allFeatures.png";
-    	if (value=="compactness_correlation")
-    		img.src="/static/img/path100/compactness_correlation.png";
-    	if (value=="area_homo")
-    		img.src="/static/img/path100/area_homogenity.png";
-    	if (value=="boundedIndex")
-    		img.src="/static/img/path100/boundaryIndex.png";
-    	if (value=="perimeter_dissimilarity")
-    		img.src="/static/img/path100/perimeter_dissimilarity.png";
-    }
-    </script>
-
 </head>
 
 <body>
@@ -267,7 +246,7 @@
     </section>
     
     
-    <section id="select" class="portfolio"> 
+    <section id="select" class="select"> 
         <div class="col-lg-6">
             <h3>Select Features</h3>
             <div class="table-responsive">
@@ -281,9 +260,18 @@
                     <tbody>
                         <tr>
                             <td><h5>Area</h5></td>
-                            <td><input id="ex1" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]"/></td>
+                            <td>
+								<div class="input-group">
+								  <div class="slider slider-disabled">
+								    <input id="ex1" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]" data-slider-enabled="false"/>
+								  </div>
+								  <span class="input-group-addon">
+									<input id="ex1-enabled" type="checkbox">
+								  </span>
+								</div><!-- /input-group -->
+                            </td>
                             <td><h5>Parameter</h5></td>
-                            <td><input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]"/></td>
+                            <td><input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,0]"/></td>
                         </tr>
                         <tr>
                             <td><h5>Compactness</h5></td>
@@ -295,7 +283,7 @@
                             <td><h5>BoundaryIndex</h5></td>
                             <td><input id="ex5" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]"/></td>
                             <td><h5>Contrast</h5></td>
-                            <td><input id="ex6" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]"/></td>
+                            <td><input id="ex6" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]"/><span id="ex6SliderVal">3</span></td>
                         </tr>
                         <tr>
                             <td><h5>Energy</h5></td>
@@ -320,39 +308,36 @@
         </div>
     </section>
     
-    
-    <section id="graph" class="graph">
+    <!-- Portfolio -->
+    <section id="cluster" class="cluster">
         <div class="col-lg-6">
-            <section id="query" class="about">
-                    <select id="queries">
-                    <option value="allFeatures" onclick="changeImage(this.value)" >Cluster with all features</option>
-                    <option value="area100" onclick="changeImage(this.value)">Cluster with area > 100</option>
-                    <option value="area_homo" onclick="changeImage(this.value)">Cluster with area>150 and homogenity > 0.99998</option>
-                    <option value="perimeter_dissimilarity" onclick="changeImage(this.value)">Cluster with perimeter less than 45 and dissimilarity > 0.004 </option>
-                    <option value="boundedIndex" onclick="changeImage(this.value)">Cluster with  bounded Index=1</option>
-                    <option value="compactness_correlation" onclick="changeImage(this.value)">Cluster with compactness 0.02 to 0.05 and coorelation > 0.8</option>
-                </select>
-            </section>
-
             <div class="dropdown">
               <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                 Select Cluster with
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#about">All features</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" value="area100" onclick="changeImage(this.value)">Area > 100</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" value="area_homo" onclick="changeImage(this.value)">Area>150 and homogenity > 0.99998</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" value="perimeter_dissimilarity" onclick="changeImage(this.value)">Perimeter less than 45 and dissimilarity > 0.004</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" value="boundedIndex" onclick="changeImage(this.value)">Bounded Index=1</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" value="compactness_correlation" onclick="changeImage(this.value)">Compactness 0.02 to 0.05 and Coorelation > 0.8</a></li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" id="all">All features</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" id="area10">Area > 100</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" id="areahm">Area>150 and homogenity > 0.99998</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" id="peri">Perimeter less than 45 and dissimilarity > 0.004</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" id="bound">Bounded Index=1</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" id="comp">Compactness 0.02 to 0.05 and Coorelation > 0.8</a>
+                </li>
               </ul>
             </div>
         </div>
-    </section>
-    
-    <!-- Portfolio -->
-    <section id="cluster" class="cluster">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1 text-center">
@@ -361,12 +346,12 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="portfolio-item">
-                                <img id="imagebox" class="img-responsive" src="static/img/path100/allFeatures.png">
+                                <img id="imageboxk" class="img-responsive" src="static/img/path100/allFeatures.png">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="portfolio-item">
-                                <img id="imagebox" class="img-responsive" src="static/img/path100/dbscan/area100.png">
+                                <img id="imageboxd" class="img-responsive" src="static/img/path100/dbscan/area100.png">
                             </div>
                         </div>
                     </div>
@@ -491,9 +476,21 @@
       $(".graph-val").val(relativeX+':'+relativeY);
     });
         
-    // With JQuery
-    $("#ex1").slider({});$("#ex2").slider({});$("#ex3").slider({});$("#ex4").slider({});$("#ex5").slider({});$("#ex6").slider({});
-    $("#ex7").slider({});$("#ex8").slider({});$("#ex9").slider({});$("#ex10").slider({});$("#ex11").slider({});
+    $("#ex1").slider({});$("#ex2").slider({});$("#ex3").slider({});$("#ex4").slider({});
+    $("#ex5").slider({});$("#ex6").slider({});$("#ex7").slider({});$("#ex8").slider({});
+    $("#ex9").slider({});$("#ex10").slider({});$("#ex11").slider({});
+        
+    $("#ex6").on("slide", function(slideEvt) {
+        $("#ex6SliderVal").text(slideEvt.value);
+    });
+	$("#ex1-enabled").click(function() {
+	if(this.checked) {
+		$("#ex1").slider("enable");
+	}
+	else {
+		$("#ex1").slider("disable");
+	}
+});
         
     /* attach a submit handler to the form */
     $("#btn-ex").click(function() {
@@ -522,7 +519,38 @@
             $("#result").empty().append(content);
         });*/
     });
+        
+    var imgPath = '/static/img/path100/';
+    $("#all").click(function(value) {
+        $('#imageboxk').attr('src', imgPath + 'allFeatures.png');
+        $('#imageboxd').attr('src', imgPath + 'dbscan/' + 'allFeatures.png');
+    });
 
+    $("#area10").click(function(value) {
+        $('#imageboxk').attr('src', imgPath + 'area100.png');
+        $('#imageboxd').attr('src', imgPath + 'dbscan/' + 'area100.png');
+    });
+
+    $("#comp").click(function(value) {
+        $('#imageboxk').attr('src', imgPath + 'compactness_correlation.png');
+        $('#imageboxd').attr('src', imgPath + 'dbscan/' + 'compactness_correlation.png');
+    });
+        
+    $("#areahm").click(function(value) {
+        $('#imageboxk').attr('src', imgPath + 'area_homogenity.png');
+        $('#imageboxd').attr('src', imgPath + 'dbscan/' + 'area_homogenity.png');
+    });
+
+    $("#bound").click(function(value) {
+        $('#imageboxk').attr('src', imgPath + 'boundaryIndex.png');
+        $('#imageboxd').attr('src', imgPath + 'dbscan/' + 'boundaryIndex.png');
+    });
+
+    $("#peri").click(function(value) {
+        $('#imageboxk').attr('src', imgPath + 'perimeter_dissimilarity.png');
+        $('#imageboxd').attr('src', imgPath + 'dbscan/' + 'perimeter_dissimilarity.png');
+    });
+    	 
     // Scrolls to the selected menu item on the page
     $(function() {
         $('a[href*=#]:not([href=#])').click(function() {

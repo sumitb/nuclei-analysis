@@ -203,9 +203,21 @@ hr.small {
     padding: 50px 0;
 }
 
-/* Services */
+/* Table */
 
-.services {
+.table {
+    padding: 50px 0;
+}
+
+/* Cluster */
+
+.cluster {
+    padding: 50px 0;
+}
+
+/* Select */
+
+.select {
     padding: 50px 0;
 }
 
