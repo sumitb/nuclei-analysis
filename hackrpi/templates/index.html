@@ -253,53 +253,54 @@
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
                         <tr class="warning">
-                            <th colspan="2" class="text-center">Geometric</th>
                             <th colspan="2" class="text-center">Texture</th>
+                            <th colspan="2" class="text-center">Geometric</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+							<td><h5>Contrast</h5></td>
+                            <td><input id="ex6" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1" data-slider-step="0.001" data-slider-value="[0,0.001]"/><!--<span id="ex6SliderVal">3</span>--></td>
                             <td><h5>Area</h5></td>
                             <td>
-								<div class="input-group">
+								<input id="ex1" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="1" data-slider-value="[0,1]"/>
+								<!--<div class="input-group">
 								  <div class="slider slider-disabled">
-								    <input id="ex1" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]" data-slider-enabled="false"/>
+								    <input id="ex1" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="1" data-slider-value="[0,1]" data-slider-enabled="false"/>
 								  </div>
 								  <span class="input-group-addon">
 									<input id="ex1-enabled" type="checkbox">
 								  </span>
 								</div><!-- /input-group -->
-                            </td>
-                            <td><h5>Parameter</h5></td>
-                            <td><input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,0]"/></td>
-                        </tr>
-                        <tr>
-                            <td><h5>Compactness</h5></td>
-                            <td><input id="ex3" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]"/></td>
-                            <td><h5>Assymetry</h5></td>
-                            <td><input id="ex4" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]"/></td>
-                        </tr>
-                        <tr>
-                            <td><h5>BoundaryIndex</h5></td>
-                            <td><input id="ex5" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]"/></td>
-                            <td><h5>Contrast</h5></td>
-                            <td><input id="ex6" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]"/><span id="ex6SliderVal">3</span></td>
+                            </td>                            
                         </tr>
                         <tr>
                             <td><h5>Energy</h5></td>
-                            <td><input id="ex7" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]"/></td>
-                            <td><h5>Homogenity</h5></td>
-                            <td><input id="ex8" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]"/></td>
+                            <td><input id="ex7" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1" data-slider-step="0.001" data-slider-value="[0,0.001]"/></td>
+                            <td><h5>Parameter</h5></td>
+                            <td><input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="500" data-slider-step="1" data-slider-value="[0,1]"/></td>							
                         </tr>
                         <tr>
-                            <td><h5>Correlation</h5></td>
-                            <td><input id="ex9" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]"/></td>
-                            <td><h5>Dissimilarity</h5></td>
-                            <td><input id="ex10" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]"/></td>
+							<td><h5>Homogenity</h5></td>
+                            <td><input id="ex8" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1" data-slider-step="0.001" data-slider-value="[0,0.001]"/></td>
+                            <td><h5>Compactness</h5></td>
+                            <td><input id="ex3" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1" data-slider-step="0.001" data-slider-value="[0,0.001]"/></td>
+                        </tr>
+                        <tr>
+							<td><h5>Correlation</h5></td>
+                            <td><input id="ex9" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1" data-slider-step="0.001" data-slider-value="[0,0.001]"/></td>
+							<td><h5>Assymetry</h5></td>
+                            <td><input id="ex4" type="text" class="span2" value="" data-slider-min="0" data-slider-max="2500" data-slider-step="1" data-slider-value="[0,1]"/></td>
+                        </tr>
+                        <tr>
+							<td><h5>Dissimilarity</h5></td>
+                            <td><input id="ex10" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1" data-slider-step="0.001" data-slider-value="[0,0.001]"/></td>
+                            <td><h5>BoundaryIndex</h5></td>
+                            <td><input id="ex5" type="text" class="span2" value="" data-slider-min="0" data-slider-max="2" data-slider-step="0.001" data-slider-value="[0,0.001]"/></td>
                         </tr>
                         <tr>
                             <td><h5>ASM</h5></td>
-                            <td><input id="ex11" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,450]"/></td>
+                            <td><input id="ex11" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1" data-slider-step="0.001" data-slider-value="[0,0.001]"/></td>
                             <td colspan="2" class="text-center"><button id="btn-ex" type="submit" class="btn btn-dark">Submit</button></td>
                         </tr>
                     </tbody>
@@ -475,22 +476,23 @@
       //alert(relativeX+':'+relativeY);
       $(".graph-val").val(relativeX+':'+relativeY);
     });
-        
-    $("#ex1").slider({});$("#ex2").slider({});$("#ex3").slider({});$("#ex4").slider({});
+       
+	$("#ex1").slider({});$("#ex2").slider({});$("#ex3").slider({});$("#ex4").slider({});
     $("#ex5").slider({});$("#ex6").slider({});$("#ex7").slider({});$("#ex8").slider({});
     $("#ex9").slider({});$("#ex10").slider({});$("#ex11").slider({});
         
-    $("#ex6").on("slide", function(slideEvt) {
+    /*$("#ex6").on("slide", function(slideEvt) {
         $("#ex6SliderVal").text(slideEvt.value);
-    });
-	$("#ex1-enabled").click(function() {
+    });*/
+	
+	/*$("#ex1-enabled").click(function() {
 	if(this.checked) {
 		$("#ex1").slider("enable");
 	}
 	else {
 		$("#ex1").slider("disable");
 	}
-});
+	});*/
         
     /* attach a submit handler to the form */
     $("#btn-ex").click(function() {
