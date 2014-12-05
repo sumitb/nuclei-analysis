@@ -9,7 +9,7 @@ from os import getcwd
 # Generate sample data
 #centers = [[1, 1], [-1, -1], [1, -1]]
 #X, labels_true = make_blobs(n_samples=750, centers=centers, cluster_std=0.4)
-fileNum = '00'
+fileNum = '01'
 dataDir = getcwd()+ '/../data/path-image-1' + str(fileNum) + '.tif/'
 
 def labels(featureNum):
