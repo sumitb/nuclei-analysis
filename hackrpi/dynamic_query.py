@@ -2,28 +2,44 @@ import os
 import itertools
 import numpy as np
 from PIL import Image, ImageDraw
+
 #Cluster based on filters
-fileNum = '01'
-curDir = os.path.dirname(os.path.realpath("__file__"))
-parDir = os.path.abspath(os.path.join(curDir, os.pardir))  #abspath(curDir/..)
-dataDir = parDir + '/data/path-image-1' + str(fileNum) + '.tif/'
-ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
+#fileNum = '01'
+#curDir = os.path.dirname(os.path.realpath("__file__"))
+#parDir = os.path.abspath(os.path.join(curDir, os.pardir))  #abspath(curDir/..)
+#dataDir = parDir + '/data/path-image-1' + str(fileNum) + '.tif/'
+#ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
 # Load path-image from .jpg
-imgPath = dataDir + 'path-image-1' + str(fileNum) + '.000000.000000.jpg'
+#imgPath = dataDir + 'path-image-1' + str(fileNum) + '.000000.000000.jpg'
 # Load polygons co-ordinates from .txt
-txtPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.txt'
-txt = open(txtPath, 'r')
+#txtPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.txt'
+#txt = open(txtPath, 'r')
 
 
 def pairwise(iterable):
-    "s -> (s0,s1), (s2,s3), (s4, s5), ..."
+    #"s -> (s0,s1), (s2,s3), (s4, s5), ..."
     a = iter(iterable)
     return itertools.izip(a, a)
 
-def drawPoly(polyIdList):
+# Obtain text file given image file and data directory
+def getTextPath(imgPath, dataDir):
+    import os
+
+    res = ''
+    for ind,elem in enumerate(imgPath.split('.')):
+        res += elem
+        if ind == 1:
+            res += '.seg'
+        res += '.'
+    txtPath = dataDir + '/' + res + 'txt'
+
+    txt = open(txtPath, 'r')
+    return txt
+
+def drawPoly(polyIdList, txt, imgPath, dataDir):
     count = 1
     #print polyIdList
-    im = Image.open(imgPath)
+    im = Image.open(dataDir + '/' + imgPath + '.jpg')
     #draw = ImageDraw.Draw(im)
     for line in txt:
         if count in polyIdList:
@@ -50,29 +66,31 @@ def drawPoly(polyIdList):
             #draw.line((0, im.size[1], im.size[0], 0), fill=128)
             #draw.polygon(mypoly, outline=1, fill=128)
             ImageDraw.Draw(im).polygon(mypoly, outline=(0,0,0,128), fill=(255,255,0,128))
-            #print mypoly
+            print mypoly
             #del draw
         count+=1
-    im.save(dataDir+"uiQueryPolyMark.jpg")
+    im.save(dataDir + '/' + imgPath + ".uiQueryPolyMark.jpg")
 
 
-def filteredCluster(paraList):
+def filteredCluster(paraList, imgPath, dataDir):
 
-    fp = open(ftPath,'r')
-    fName = dataDir+'filterFeature.csv' 
+    ftPath = dataDir + '/' + imgPath + '.csv' 
+    fp = open(ftPath, 'r')
+    fName = dataDir + '/' + imgPath + '.filter.csv' 
     fw = open(fName,'w')
     featureIndexList = []
     polyId = []
     data = fp.readlines()
-    for i,para in enumerate(paraList):
-        if(para !=None):
+    
+    #print paraList
+    for i, para in enumerate(paraList):
+        if(para != None):
             #print para
             featureIndexList.append(i)
-        
-    
+    #print "Selected features: ",featureIndexList
     for line in data:
         value = line.split()
-        #print value[0]
+        print value
         area = float(value[1])
         perimeter = float(value[2])
         compactness = float(value[3])
@@ -88,16 +106,17 @@ def filteredCluster(paraList):
         feature = ""
         for i,index in enumerate(featureIndexList):
             para = paraList[index]
-            print para
+            #print para
             if (float(value[index+1])>=para[0]) and (float(value[index+1]) <= para[1]):
                 feature += str(float(value[index+1])) + " "
                 #print "check here"            
             else:
+                print "Fail: ", para[0], para[1], value[index+1]
                 feature = ""
                 break
         
         if(feature != ""):
-            #print "found"
+            print "found"
             fw.write(feature + "\n")
             polyId.append(int(value[0]))
         else:
@@ -106,11 +125,12 @@ def filteredCluster(paraList):
         
     #filteredCluster(0)
     fw.close()
-    drawPoly(polyId)
-    from kmean_cluster import start_kmeans
-    from plot_dbscan import start_dbscan
-    start_kmeans("filterFeature.csv","filterFeature.png",featureIndexList)
-    start_dbscan("filterFeature.csv","filterFeature.png",featureIndexList)
+    txt = getTextPath(imgPath, dataDir)
+    drawPoly(polyId, txt, imgPath, dataDir)
+    #from kmean_cluster import start_kmeans
+    #from plot_dbscan import start_dbscan
+    #start_kmeans(fName, dataDir + '/' + imgPath + ".kmeans.png", featureIndexList)
+    #start_dbscan(fName, dataDir + '/' + imgPath + ".dbscan.png", featureIndexList)
 
 #for testing
 #paraList = [[0,100],[0,100],[0,100],[0,100],None,None,None,None,None,None,None,None]

@@ -4,15 +4,16 @@ from scipy.spatial import distance
 from sklearn.cluster import DBSCAN
 from sklearn import metrics
 
-from os import getcwd
+#from os import getcwd
+
 ##############################################################################
 # Generate sample data
 #centers = [[1, 1], [-1, -1], [1, -1]]
 #X, labels_true = make_blobs(n_samples=750, centers=centers, cluster_std=0.4)
-fileNum = '01'
-dataDir = getcwd()+ '/../data/path-image-1' + str(fileNum) + '.tif/'
+#fileNum = '01'
+#dataDir = getcwd()+ '/../data/path-image-1' + str(fileNum) + '.tif/'
 
-def labels(featureNum):
+def clabels(featureNum):
   if featureNum == 0:
     label = "Area"
   elif featureNum == 1:
@@ -39,8 +40,8 @@ def labels(featureNum):
 
 
 
-def load_data(fi):
-  fName = dataDir + fi
+def load_data(fName):
+  #fName = dataDir + fi
   fp = open(fName)
   X = np.loadtxt(fp)
   fp.close()
@@ -107,9 +108,10 @@ def start_dbscan(fi,fo,featureIndexList=[0,1]):
                     markeredgecolor='k', markersize=markersize)
 
     pl.title('Estimated number of clusters: %d' % n_clusters_)
-    pl.savefig(dataDir + "dbscan/"+fo )
-    pl.xlabel(labels(featureIndexList[0]))
-    pl.ylabel(labels(featureIndexList[1]))
+    #pl.savefig(dataDir + "dbscan/"+fo )
+    pl.savefig(fo)
+    pl.xlabel(clabels(featureIndexList[0]))
+    pl.ylabel(clabels(featureIndexList[1]))
  
     pl.ion()
 #for testing

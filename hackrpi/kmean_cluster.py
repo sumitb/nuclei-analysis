@@ -5,15 +5,15 @@ from sklearn.cluster import KMeans
 from scipy.cluster.vq import kmeans,vq
 from scipy.spatial.distance import cdist
 
-fileNum = '01'
+#fileNum = '01'
 #dataDir = 'data/path-image-1' + str(fileNum) + '.tif/'
 #ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
-curDir = os.path.dirname(os.path.realpath("__file__"))
-parDir = os.path.abspath(os.path.join(curDir, os.pardir))
-dataDir = parDir + '/data/path-image-1' + str(fileNum) + '.tif/'
+#curDir = os.path.dirname(os.path.realpath("__file__"))
+#parDir = os.path.abspath(os.path.join(curDir, os.pardir))
+#dataDir = parDir + '/data/path-image-1' + str(fileNum) + '.tif/'
 
-def load_data(fi):
-  fName = dataDir + fi
+def load_data(fName):
+  #fName = dataDir + fi
   fp = open(fName,'r')
   XX = np.loadtxt(fp)
   fp.close()
@@ -90,7 +90,8 @@ def plot_clusters(orig, pred, nx, ny, fo, legend=True):
  
   if legend:
     ll=plt.legend()
-  plt.savefig(dataDir + "kmeans/" + fo)
+  #plt.savefig(dataDir + "kmeans/" + fo)
+  plt.savefig(fo)
   plt.ion()
   
   return (p0, p1, p2)

@@ -241,31 +241,55 @@ def analysis(imgPath, txt, ft):
 def fileProcess():
     import os
 
+    iCount = 0
     #rootDir = '/data08/images/matlabOutput2'
-    fileNum = '01'
-    dataDir = 'data/path-image-1' + str(fileNum) + '.tif/'
-    rootDir = '/home/sumit/Project/cse595/nuclei/data'
+    outDir = '/home/sumit/nuclei/data'
+    rootDir = '/data08/images/matlabOutput2/intgen.org_GBM.diagnostic_images.Level_1.1.0.0/TCGA-02-0010-01Z-00-DX4.07de2e55-a8fe-40ee-9e98-bcb78050b9f7.svs'
 
     for dirName, subdirList, fileList in os.walk(rootDir):
-        print('Found directory: %s' % dirName)
-        for fname in fileList:
-            print('\t%s' % fname)
+        #print('Found directory: %s' % dirName)
+        for ind, fname in enumerate(fileList):
+            #print('\t%s' % fname)
 
             # Load path-image from .jpg
-            imgPath = dataDir + 'path-image-1' + str(fileNum) + '.000000.000000.jpg'
+            if '.jpg' in fname: 
+                res = ''
+                iCount += 1
+                if iCount > 1:
+                    break
+                imgPath = fname.replace('.jpg', '') 
+                for ind,elem in enumerate(imgPath.split('.')):
+                    res += elem
+                    if ind == 1:
+                        res += '.seg'
+                    res += '.'
+                # Load polygons co-ordinates from .txt
+                itxtPath = dirName + '/' + res + 'txt'
+                otxtPath = outDir + '/' + res + 'txt'
 
-            # Load polygons co-ordinates from .txt
-            txtPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.txt'
-            txt = open(txtPath, 'r')
+                # Write features in csv
+                #ftPath = dirName + '/' + res + 'csv'
+                ftPath = outDir + '/' + imgPath + '.csv'
+                ft = open(ftPath, 'w')
+                
+                # create backup of images in output data dir.
+                oimgPath = outDir + '/' + imgPath + '.jpg' 
+                imgPath = dirName + '/' + imgPath + '.jpg' 
+                with open(imgPath, 'r') as imgIn:
+                    img = imgIn.read()
+                with open(oimgPath, 'w') as imgOut:
+                    imgOut.write(img)
 
-            # Write features in csv
-            ftPath = dataDir + 'path-image-1' + str(fileNum) + '.seg.000000.000000.csv'
-            ft = open(ftPath, 'w')
-
-            with open(txtPath, 'r') as fin:
-                data = fin.read().splitlines(True)
-            with open(txtPath, 'w') as fout:
-                fout.writelines(data[1:])
-            #analysis(imgPath, txt, ft)
+                with open(itxtPath, 'r') as fin:
+                    data = fin.read().splitlines(True)
+                with open(otxtPath, 'w') as fout:
+                    fout.writelines(data[1:])
+                fout.close()
+                txt = open(otxtPath, 'r')
+                analysis(imgPath, txt, ft)
+            else:
+                pass
+                #print "No image found"
+    print iCount
 
 fileProcess()
