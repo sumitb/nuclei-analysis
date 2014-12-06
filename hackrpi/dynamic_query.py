@@ -2,6 +2,8 @@ import os
 import itertools
 import numpy as np
 from PIL import Image, ImageDraw
+from scipy import misc
+from skimage.draw import polygon
 
 #Cluster based on filters
 #fileNum = '01'
@@ -38,9 +40,15 @@ def getTextPath(imgPath, dataDir):
 
 def drawPoly(polyIdList, txt, imgPath, dataDir):
     count = 1
-    #print polyIdList
-    im = Image.open(dataDir + '/' + imgPath + '.jpg')
-    #draw = ImageDraw.Draw(im)
+    #print dataDir,'/',imgPath,'.jpg'
+    #im = Image.open(dataDir + '/' + imgPath + '.jpg')
+    #imArray = np.asarray(im)
+    #maskIm = Image.new("RGB", (imArray.shape[1], imArray.shape[0]), "Black")
+    #draw = ImageDraw.Draw(maskIm)
+    #draw.rectangle([0,0,400,400], fill="green")
+    
+    #print imArray
+    imgArray = np.zeros((4096, 4096), dtype=np.uint8)
     for line in txt:
         if count in polyIdList:
             poly = line.split('\t')
@@ -59,17 +67,27 @@ def drawPoly(polyIdList, txt, imgPath, dataDir):
 
             # Draw a line from every co-ordinate with thickness of 1 px
             for x, y in pairwise(polyList):
-               mypoly.append((x, y))
+               mypoly.append((x/2, y))
 
             P = np.array(mypoly)
-            #draw.line((0, 0) + im.size, fill=128)
+            # Extract x and y co-ordinates
+            x = P[:, 0]
+            y = P[:, 1]
+            rr, cc = polygon(y, x)
+            imgArray[rr, cc] = 200
+            #draw.line((0, 0) + (count,count), fill=128)
             #draw.line((0, im.size[1], im.size[0], 0), fill=128)
             #draw.polygon(mypoly, outline=1, fill=128)
-            ImageDraw.Draw(im).polygon(mypoly, outline=(0,0,0,128), fill=(255,255,0,128))
-            print mypoly
+            #draw.polygon([(count, count+1), (count-1, count+1), (count-1, count), (count, count+1)], outline=1, fill=128)
+            #ImageDraw.Draw(im).polygon(mypoly, outline=(0,0,0,128), fill=(255,255,0,128))
+            #ImageDraw.Draw(maskIm).polygon(mypoly, outline=(0,0,0,128), fill=(255,255,0,128))
+            #print mypoly
             #del draw
         count+=1
-    im.save(dataDir + '/' + imgPath + ".uiQueryPolyMark.jpg")
+    
+    #im.save(dataDir + '/' + imgPath + ".uiQueryPolyMark.jpg")
+    #maskIm.save(dataDir + '/' + imgPath + ".uiQueryPolyMark.jpg")
+    misc.imsave(dataDir + '/' + imgPath + ".uiQueryPolyMark.jpg", imgArray)
 
 
 def filteredCluster(paraList, imgPath, dataDir):
@@ -90,7 +108,7 @@ def filteredCluster(paraList, imgPath, dataDir):
     #print "Selected features: ",featureIndexList
     for line in data:
         value = line.split()
-        print value
+        #print value
         area = float(value[1])
         perimeter = float(value[2])
         compactness = float(value[3])
@@ -111,12 +129,12 @@ def filteredCluster(paraList, imgPath, dataDir):
                 feature += str(float(value[index+1])) + " "
                 #print "check here"            
             else:
-                print "Fail: ", para[0], para[1], value[index+1]
+                #print "Fail: ", para[0], para[1], value[index+1]
                 feature = ""
                 break
         
         if(feature != ""):
-            print "found"
+            #print "found"
             fw.write(feature + "\n")
             polyId.append(int(value[0]))
         else:
@@ -127,10 +145,10 @@ def filteredCluster(paraList, imgPath, dataDir):
     fw.close()
     txt = getTextPath(imgPath, dataDir)
     drawPoly(polyId, txt, imgPath, dataDir)
-    #from kmean_cluster import start_kmeans
-    #from plot_dbscan import start_dbscan
-    #start_kmeans(fName, dataDir + '/' + imgPath + ".kmeans.png", featureIndexList)
-    #start_dbscan(fName, dataDir + '/' + imgPath + ".dbscan.png", featureIndexList)
+    from kmean_cluster import start_kmeans
+    from plot_dbscan import start_dbscan
+    start_kmeans(fName, dataDir + '/' + imgPath + ".kmeans.png", featureIndexList)
+    start_dbscan(fName, dataDir + '/' + imgPath + ".dbscan.png", featureIndexList)
 
 #for testing
 #paraList = [[0,100],[0,100],[0,100],[0,100],None,None,None,None,None,None,None,None]

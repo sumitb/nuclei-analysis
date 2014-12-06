@@ -255,7 +255,7 @@ def fileProcess():
             if '.jpg' in fname: 
                 res = ''
                 iCount += 1
-                if iCount > 1:
+                if iCount > 3:
                     break
                 imgPath = fname.replace('.jpg', '') 
                 for ind,elem in enumerate(imgPath.split('.')):

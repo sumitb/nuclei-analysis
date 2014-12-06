@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+import os
+from flask import Flask, render_template, request, send_from_directory
 app = Flask(__name__)
 
 @app.route('/')
@@ -32,6 +33,10 @@ def feature_select():
         imgPath = "TCGA-02-0010-01Z-00-DX4.07de2e55-a8fe-40ee-9e98-bcb78050b9f7.004096.000000"
 	filteredCluster(featureStr, imgPath, dataDir)
 	return 'OK'
+
+@app.route('/data/<path:filename>')
+def send_foo(filename):
+	return send_from_directory('/home/sumit/nuclei/data', filename)
 
 if __name__ == '__main__':
 	app.run(debug=True)
